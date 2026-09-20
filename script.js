@@ -1,8 +1,7 @@
 (() => {
   const root = document.documentElement;
   const saved = localStorage.getItem("sc-theme");
-  const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-  root.dataset.theme = saved || (systemDark ? "dark" : "light");
+  root.dataset.theme = saved || "dark";
 
   const themeButton = document.querySelector("[data-theme-toggle]");
   const setThemeIcon = () => {
