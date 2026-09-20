@@ -1,1 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="32" fill="#171714"/><text x="32" y="40" text-anchor="middle" font-family="Georgia,serif" font-size="27" font-style="italic" fill="#f4f1e9">SC</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+<defs>
+  <linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#df1119"/><stop offset=".52" stop-color="#4ab5f7"/><stop offset="1" stop-color="#08131b"/></linearGradient>
+  <filter id="glow"><feGaussianBlur stdDeviation="3.3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="64" height="64" rx="15" fill="url(#g)"/>
+<path d="M32 4v18" stroke="#050607" stroke-width="4" stroke-linecap="round"/>
+<rect x="25" y="19" width="14" height="10" rx="2" fill="#090b0d"/>
+<path d="M32 27c-7 0-12 5.5-12 12.5 0 4.9 2.6 8.7 6.1 11.1V55h11.8v-4.4c3.5-2.4 6.1-6.2 6.1-11.1C44 32.5 39 27 32 27z" fill="#fff" filter="url(#glow)"/>
+<path d="M27 55h10" stroke="#d1a553" stroke-width="3" stroke-linecap="round"/>
+</svg>
