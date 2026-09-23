@@ -1,0 +1,57 @@
+---
+layout: layouts/base.njk
+title: KPI Diagnostic
+description: "A two-minute diagnostic for a KPI that turned red: find out whether the cause is clarity, skill, capacity, process design or ownership."
+activeNav: /tools.html
+permalink: /tools/kpi-diagnostic/
+---
+<section class="shell page-hero tool-hero">
+  <p class="eyebrow">Free tool · 2 minutes</p>
+  <h1>KPI Diagnostic</h1>
+  <p class="lede">A number turned red. Before you push harder on it, find where the process first became unstable. Rate ten statements about the work behind the number.</p>
+</section>
+
+<section class="shell tool-layout">
+  <form class="tool-panel diagnostic" data-diagnostic novalidate>
+    <div class="field">
+      <label for="kpi-name">Which KPI? <span class="optional">optional</span></label>
+      <input id="kpi-name" name="kpi" placeholder="e.g. Delivery delays, room readiness, picking errors" autocomplete="off">
+    </div>
+
+    <ol class="statement-list">
+      {%- for s in kpiDiagnostic.statements %}
+      {%- set qi = loop.index0 %}
+      <li>
+        <fieldset class="statement">
+          <legend><span class="statement-number">{{ loop.index | pad }}</span>{{ s.text }}</legend>
+          <div class="scale">
+            {%- for label in kpiDiagnostic.scale %}
+            <label class="scale-option">
+              <input type="radio" name="q{{ qi }}" value="{{ loop.index0 }}" data-cause="{{ s.cause }}">
+              <span>{{ label }}</span>
+            </label>
+            {%- endfor %}
+          </div>
+        </fieldset>
+      </li>
+      {%- endfor %}
+    </ol>
+
+    <div class="tool-actions">
+      <button class="button-primary" type="submit">See the result</button>
+      <p class="form-note" data-progress aria-live="polite">0 of {{ kpiDiagnostic.statements.length }} answered</p>
+    </div>
+  </form>
+
+  <aside class="tool-aside">
+    <p class="kicker">How it works</p>
+    <p>Each statement points to one of five causes from the essay <a class="inline-link" href="/article-kpi.html">The KPI is not the problem</a>: clarity, skill, capacity, process design and ownership.</p>
+    <p>The result shows which cause fits your situation best, with three first moves and one question to ask on the floor.</p>
+    <p class="privacy-note">Everything stays in your browser. Nothing you enter is sent or stored.</p>
+  </aside>
+</section>
+
+<section class="shell tool-result" data-result hidden tabindex="-1" aria-live="polite"></section>
+
+<script type="application/json" id="kpi-diagnostic-data">{{ kpiDiagnostic | dump | safe }}</script>
+<script src="/js/kpi-diagnostic.js" defer></script>

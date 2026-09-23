@@ -131,6 +131,23 @@ permalink: /index.html
     </div>
   </section>
 
+  <section class="shell section">
+    <div class="section-heading">
+      <div>
+        <p class="kicker">Free tools</p>
+        <h2>Thinking you can use.</h2>
+      </div>
+      <p>Small tools built from the essays. They run in your browser, and nothing you type leaves your device.</p>
+    </div>
+
+    <div class="tool-grid home-tools">
+      {%- set level = 3 %}
+      {%- for tool in tools %}{% if tool.url %}
+      {% include "partials/tool-card.njk" %}
+      {%- endif %}{% endfor %}
+    </div>
+  </section>
+
 {% include "partials/newsletter.njk" %}
 
   <section class="shell cta">

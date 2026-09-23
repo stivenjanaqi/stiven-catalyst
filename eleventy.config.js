@@ -10,7 +10,7 @@ export default function (eleventyConfig) {
   // prefixes them with the folder the site lives in (e.g. /stiven-catalyst/).
   eleventyConfig.addPlugin(HtmlBasePlugin);
 
-  for (const path of ["styles.css", "script.js", "favicon.svg", "social.png", "fonts", "media"]) {
+  for (const path of ["styles.css", "script.js", "favicon.svg", "social.png", "fonts", "media", "js"]) {
     eleventyConfig.addPassthroughCopy(`src/${path}`);
   }
 
@@ -36,6 +36,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter("readableDate", (date) =>
     new Date(date).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" })
   );
+  eleventyConfig.addFilter("pad", (value) => String(value).padStart(2, "0"));
   eleventyConfig.addFilter("isoDate", (date) => new Date(date).toISOString().slice(0, 10));
   eleventyConfig.addFilter("absoluteUrl", (path) => new URL(String(path).replace(/^\//, ""), site.url).href);
   // The newest published essay marked "featured", for the homepage.
