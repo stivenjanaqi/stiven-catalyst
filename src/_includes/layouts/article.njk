@@ -3,6 +3,8 @@ layout: layouts/base.njk
 activeNav: /insights.html
 ogType: article
 ---
+{%- set pageUrl = page.url | absoluteUrl %}
+<div class="reading-progress" aria-hidden="true"><span data-reading-progress></span></div>
 <section class="shell article-hero">
   <p class="eyebrow">{{ category }} · Essay</p>
   <h1>{{ title }}</h1>
@@ -11,9 +13,20 @@ ogType: article
   {%- endif %}
 </section>
 <section class="shell article-body">
-  <aside class="article-aside">{{ author or site.author }}<br><time datetime="{{ page.date | isoDate }}">{{ page.date | readableDate }}</time>{% if read_time %}<br>{{ read_time }} read{% endif %}</aside>
-  <article class="article-content">
+  <aside class="article-aside">{{ author or site.author }}<br><time datetime="{{ page.date | isoDate }}">{{ page.date | readableDate }}</time>{% if readingTime %}<br>{{ readingTime }} read{% endif %}</aside>
+  <article class="article-content" data-article>
 {{ content | safe }}
+    <div class="share-row">
+      <p class="kicker">Share this essay</p>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ pageUrl | urlencode }}" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="mailto:?subject={{ title | urlencode }}&amp;body={{ (title + ' ' + pageUrl) | urlencode }}">Email</a>
+        <button type="button" data-copy-text="{{ pageUrl }}" data-copied-label="Link copied">Copy link</button>
+        <button type="button" data-share-url="{{ pageUrl }}" data-share-text="{{ title }}" data-native-only hidden>Share</button>
+      </div>
+    </div>
   </article>
 </section>
 {% include "partials/newsletter.njk" %}
+<script src="/js/share.js" defer></script>
+<script src="/js/article.js" defer></script>

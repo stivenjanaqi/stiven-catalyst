@@ -43,6 +43,9 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter("featured", (items) =>
     items.filter((item) => item.data.featured && item.data.status !== "soon").at(-1)
   );
+  eleventyConfig.addFilter("topics", (items, key) =>
+    [...new Set(items.map((item) => item.data[key]).filter(Boolean))].sort()
+  );
   eleventyConfig.addFilter("except", (items, excluded) => items.filter((item) => item !== excluded));
   eleventyConfig.addFilter("last", (items, count) => items.slice(-count));
   eleventyConfig.addFilter("first", (items, count) => items.slice(0, count));

@@ -89,6 +89,12 @@ content:
         description: Without quotation marks, they are added automatically.
         type: text
         required: true
+      - name: topic
+        label: Topic (optional)
+        description: Used for the filter on the Field Notes page.
+        type: select
+        options:
+          values: [Leadership, Operations, People, Systems, Hospitality, Logistics, Service, Change]
       - name: date
         label: Date
         type: date
