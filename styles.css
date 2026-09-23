@@ -1,23 +1,14 @@
-:root {
-  --paper: #f6f7f5;
-  --paper-2: #eceff0;
-  --ink: #0b1015;
-  --muted: #5f6870;
-  --line: rgba(11, 16, 21, 0.14);
-  --red: #c90912;
-  --blue: #239ee9;
-  --blue-soft: #63bdf3;
-  --gold: #b88a3b;
-  --card: rgba(255,255,255,.74);
-  --shadow: 0 28px 80px rgba(15, 28, 40, .12);
-  --radius: 24px;
-  --max: 1240px;
-  --serif: Georgia, "Times New Roman", serif;
-  --sans: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --display: "Arial Black", "Helvetica Neue", Arial, sans-serif;
+@font-face {
+  /* Fallback only: used where Arial Black is not installed (Android, Linux). */
+  font-family: "Archivo Black";
+  src: url("fonts/archivo-black-latin-400-normal.woff2") format("woff2");
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
 }
 
-[data-theme="dark"] {
+:root {
+  color-scheme: dark;
   --paper: #070a0d;
   --paper-2: #0d141a;
   --ink: #f6f7f4;
@@ -29,6 +20,26 @@
   --gold: #d1a553;
   --card: rgba(255,255,255,.045);
   --shadow: 0 34px 100px rgba(0,0,0,.34);
+  --radius: 24px;
+  --max: 1240px;
+  --serif: Georgia, "Times New Roman", serif;
+  --sans: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --display: "Arial Black", "Archivo Black", "Helvetica Neue", Arial, sans-serif;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --paper: #f6f7f5;
+  --paper-2: #eceff0;
+  --ink: #0b1015;
+  --muted: #5f6870;
+  --line: rgba(11, 16, 21, 0.14);
+  --red: #c90912;
+  --blue: #239ee9;
+  --blue-soft: #63bdf3;
+  --gold: #b88a3b;
+  --card: rgba(255,255,255,.74);
+  --shadow: 0 28px 80px rgba(15, 28, 40, .12);
 }
 
 * { box-sizing: border-box; }
@@ -53,6 +64,12 @@ img { max-width: 100%; display: block; }
 button, input { font: inherit; }
 
 ::selection { background: var(--blue); color: #001018; }
+
+:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
 
 .skip-link {
   position: fixed;
@@ -122,6 +139,13 @@ button, input { font: inherit; }
     0 0 34px color-mix(in srgb, var(--blue) 36%, transparent);
 }
 
+[data-theme="light"] .brand-mark::before {
+  box-shadow:
+    0 0 0 1px rgba(11,16,21,.28),
+    0 0 12px color-mix(in srgb, var(--blue) 70%, transparent),
+    0 0 26px color-mix(in srgb, var(--blue) 34%, transparent);
+}
+
 .brand-mark::after {
   content: "";
   position: absolute;
@@ -168,6 +192,20 @@ button, input { font: inherit; }
   cursor: pointer;
 }
 
+.icon-button svg,
+.menu-button svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.icon-moon { display: none; }
+[data-theme="light"] .icon-sun { display: none; }
+[data-theme="light"] .icon-moon { display: block; }
+
 .menu-button { display: none; }
 
 .hero {
@@ -179,6 +217,8 @@ button, input { font: inherit; }
   padding: 84px 0 70px;
   border-bottom: 1px solid var(--line);
 }
+
+.hero > :first-child { container-type: inline-size; }
 
 .eyebrow,
 .kicker {
@@ -194,7 +234,8 @@ button, input { font: inherit; }
   max-width: 900px;
   margin: 0;
   font-family: var(--display);
-  font-size: clamp(54px, 7.3vw, 108px);
+  /* ~8em is the width of "DELIBERATELY." in Arial Black */
+  font-size: clamp(34px, 12cqi, 108px);
   font-weight: 900;
   line-height: .88;
   letter-spacing: -.065em;
@@ -242,6 +283,7 @@ button, input { font: inherit; }
       color-mix(in srgb, #fff 76%, #5b5757) 100%);
   box-shadow: var(--shadow);
   isolation: isolate;
+  container-type: inline-size;
 }
 
 .brand-poster::after {
@@ -314,7 +356,8 @@ button, input { font: inherit; }
 .brand-wordmark strong {
   display: block;
   font-family: var(--display);
-  font-size: clamp(46px, 5vw, 78px);
+  /* "CATALYST" is ~5.3em wide; keep it inside the poster at every width */
+  font-size: clamp(38px, 16cqi, 78px);
   line-height: .8;
   letter-spacing: -.07em;
   text-transform: uppercase;
@@ -398,7 +441,7 @@ button, input { font: inherit; }
   line-height: .95;
 }
 
-.section-heading p {
+.section-heading > p {
   margin: 0;
   justify-self: end;
   max-width: 500px;
@@ -429,13 +472,17 @@ button, input { font: inherit; }
 }
 
 .manifesto-line {
+  container-type: inline-size;
   font-family: var(--display);
   font-size: clamp(34px, 4.5vw, 64px);
   line-height: .95;
   letter-spacing: -.055em;
   text-transform: uppercase;
 }
-.manifesto-line span { display: block; }
+.manifesto-line span {
+  display: block;
+  font-size: min(1em, 12.5cqi);
+}
 .manifesto-line .blue { color: var(--blue); }
 .manifesto-line .red { color: var(--red); }
 
@@ -530,10 +577,10 @@ button, input { font: inherit; }
   background: var(--card);
   transition: transform .25s ease, border-color .25s ease, background .25s ease;
 }
-.mini-card:hover,
-.article-card:hover,
-.project-card:hover,
-.note-card:hover {
+.mini-card:has(a):hover,
+.article-card:has(a):hover,
+.project-card:has(a):hover,
+.note-card:has(a):hover {
   transform: translateY(-4px);
   border-color: color-mix(in srgb, var(--blue) 45%, var(--line));
 }
@@ -584,6 +631,18 @@ button, input { font: inherit; }
 .article-card p {
   margin: 0 0 24px;
   color: var(--muted);
+}
+
+.soon {
+  align-self: flex-start;
+  padding: 6px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
 }
 
 .notes-grid {
@@ -667,6 +726,7 @@ button, input { font: inherit; }
 
 /* Internal pages */
 .page-hero {
+  container-type: inline-size;
   padding: 100px 0 68px;
   border-bottom: 1px solid var(--line);
 }
@@ -675,7 +735,7 @@ button, input { font: inherit; }
   margin: 0;
   max-width: 1050px;
   font-family: var(--display);
-  font-size: clamp(60px, 8.5vw, 120px);
+  font-size: clamp(38px, 15cqi, 120px);
   font-weight: 900;
   letter-spacing: -.06em;
   line-height: .86;
@@ -910,10 +970,11 @@ button, input { font: inherit; }
 
 @media (max-width: 900px) {
   .main-nav { display: none; }
+  .header-actions { margin-left: auto; }
   .menu-button { display: inline-grid; }
   .hero {
     min-height: auto;
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 52px;
     padding-top: 72px;
   }
@@ -928,7 +989,7 @@ button, input { font: inherit; }
   .manifesto,
   .cta,
   .about-grid,
-  .article-body { grid-template-columns: 1fr; }
+  .article-body { grid-template-columns: minmax(0, 1fr); }
   .section-heading p { justify-self: start; }
   .feature-card { min-height: 470px; }
   .article-grid { grid-template-columns: 1fr 1fr; }
@@ -963,9 +1024,7 @@ button, input { font: inherit; }
   .header-inner { min-height: 66px; }
   .mobile-panel { inset: 66px 0 auto 0; }
   .hero { padding: 56px 0 44px; }
-  .hero h1 { font-size: clamp(47px, 15vw, 72px); }
   .brand-poster { min-height: 430px; border-radius: 22px; }
-  .brand-wordmark strong { font-size: clamp(44px, 14vw, 64px); }
   .meta-strip { grid-template-columns: 1fr; }
   .meta-strip > div,
   .meta-strip > div:not(:first-child) {
@@ -980,7 +1039,7 @@ button, input { font: inherit; }
   .article-grid,
   .notes-grid,
   .project-grid,
-  .pillars { grid-template-columns: 1fr; }
+  .pillars { grid-template-columns: minmax(0, 1fr); }
   .article-card:last-child { grid-column: auto; }
   .feature-card { min-height: 440px; }
   .side-stack { grid-template-rows: auto; }
@@ -996,4 +1055,8 @@ button, input { font: inherit; }
   .article-deck { margin-left: 0; }
   .article-content { font-size: 19px; }
   .article-content h2 { font-size: 34px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition: none !important; }
 }
