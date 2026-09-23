@@ -1,0 +1,37 @@
+---js
+{
+  layout: "layouts/base.njk",
+  title: "Datenschutzerklärung",
+  lang: "de",
+  noindex: true,
+  eleventyExcludeFromCollections: true,
+  permalink: (data) => (data.legal.street && data.legal.city ? "/datenschutz.html" : false),
+}
+---
+<section class="shell page-hero legal-hero">
+  <p class="eyebrow">Rechtliches</p>
+  <h1>Datenschutz</h1>
+</section>
+<section class="shell legal">
+  <h2>1. Verantwortlicher</h2>
+  <p>{{ legal.name }}<br>{{ legal.street }}<br>{{ legal.postcode }} {{ legal.city }}<br>E-Mail: <a href="mailto:{{ legal.email or site.email }}">{{ legal.email or site.email }}</a></p>
+
+  <h2>2. Hosting</h2>
+  <p>Diese Website wird über GitHub Pages bereitgestellt (GitHub Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA). Beim Aufruf der Seiten verarbeitet GitHub technisch notwendige Daten, insbesondere die IP-Adresse, Datum und Uhrzeit des Zugriffs sowie Angaben zu Browser und Betriebssystem, um die Website auszuliefern und ihre Sicherheit zu gewährleisten. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO; das berechtigte Interesse liegt in einer sicheren und stabilen Bereitstellung der Website. Eine Übermittlung in die USA erfolgt auf Grundlage des EU-US Data Privacy Framework, dem GitHub angeschlossen ist. Weitere Informationen: <a href="https://docs.github.com/de/site-policy/privacy-policies/github-general-privacy-statement">GitHub-Datenschutzerklärung</a>.</p>
+
+  <h2>3. Keine Cookies, kein Tracking</h2>
+  <p>Diese Website setzt keine Cookies und verwendet keine Analyse- oder Tracking-Dienste. Schriftarten werden lokal von diesem Server geladen; es werden keine Verbindungen zu Google Fonts oder anderen Drittanbietern hergestellt.</p>
+  <p>Wenn Sie zwischen hellem und dunklem Design wechseln, wird diese Einstellung ausschließlich in Ihrem Browser gespeichert (Local Storage) und nicht an mich übertragen. Dies ist für die von Ihnen gewünschte Funktion unbedingt erforderlich (§ 25 Abs. 2 Nr. 2 TDDDG).</p>
+
+  <h2>4. Kontakt per E-Mail</h2>
+  <p>Wenn Sie mir eine E-Mail schreiben, verarbeite ich Ihre Angaben ausschließlich zur Bearbeitung Ihrer Anfrage. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b bzw. lit. f DSGVO. Die Daten werden gelöscht, sobald sie dafür nicht mehr erforderlich sind und keine gesetzlichen Aufbewahrungspflichten bestehen.</p>
+{%- if site.newsletter.action %}
+
+  <h2>5. Newsletter</h2>
+  <p>Wenn Sie den Newsletter abonnieren, verarbeite ich Ihre E-Mail-Adresse, um Ihnen neue Beiträge zuzusenden. Die Anmeldung erfolgt im Double-Opt-in-Verfahren: Sie erhalten zunächst eine E-Mail, in der Sie die Anmeldung bestätigen. Rechtsgrundlage ist Ihre Einwilligung (Art. 6 Abs. 1 lit. a DSGVO), die Sie jederzeit über den Abmeldelink in jeder E-Mail widerrufen können.</p>
+  <p>Für den Versand nutze ich {{ legal.newsletterProvider or "einen externen Newsletter-Dienst" }}. Mit dem Anbieter besteht ein Vertrag zur Auftragsverarbeitung nach Art. 28 DSGVO.</p>
+{%- endif %}
+
+  <h2>{{ "6" if site.newsletter.action else "5" }}. Ihre Rechte</h2>
+  <p>Sie haben das Recht auf Auskunft (Art. 15 DSGVO), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18), Datenübertragbarkeit (Art. 20) und Widerspruch (Art. 21). Eine erteilte Einwilligung können Sie jederzeit mit Wirkung für die Zukunft widerrufen. Außerdem können Sie sich bei einer Datenschutz-Aufsichtsbehörde beschweren, insbesondere in dem Bundesland Ihres Wohnsitzes.</p>
+</section>

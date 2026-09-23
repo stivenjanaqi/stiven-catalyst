@@ -1,0 +1,191 @@
+# Editing panel for https://app.pagescms.org
+# Every save here becomes a commit on GitHub, and the site rebuilds itself.
+
+media:
+  input: src/media
+  output: /media
+
+content:
+  - name: insights
+    label: Insights (essays)
+    type: collection
+    path: src/content/insights
+    filename: "{year}-{month}-{day}-{primary}.md"
+    view:
+      fields: [title, category, status, date]
+      primary: title
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: date
+        label: Date
+        type: date
+        required: true
+      - name: category
+        label: Category
+        type: select
+        options:
+          values: [Leadership, Operations, People, Systems, Hospitality, Logistics, Service, Change]
+      - name: status
+        label: Status
+        description: "Published = has its own page. Soon = listed as coming soon, no page yet."
+        type: select
+        default: published
+        options:
+          values: [published, soon]
+      - name: featured
+        label: Feature on homepage
+        description: The newest featured essay gets the large card on the homepage.
+        type: boolean
+      - name: read_time
+        label: Reading time
+        description: "For example: 5 min"
+        type: string
+      - name: summary
+        label: Summary (Insights list)
+        type: text
+        required: true
+      - name: teaser
+        label: Homepage teaser (optional)
+        description: Shown on homepage cards. Leave empty to use the summary.
+        type: text
+      - name: deck
+        label: Intro under the title (optional)
+        type: text
+      - name: description
+        label: Search description (optional)
+        description: What Google and LinkedIn show. Leave empty to use the summary.
+        type: text
+      - name: seo_title
+        label: Short title for the browser tab (optional)
+        type: string
+      - name: address
+        label: Custom address (advanced, leave empty)
+        description: "Only for older essays that must keep their address, e.g. /article-kpi.html"
+        type: string
+      - name: body
+        label: Essay
+        type: rich-text
+
+  - name: notes
+    label: Field Notes
+    type: collection
+    path: src/content/notes
+    filename: "{year}-{month}-{day}-{primary}.md"
+    view:
+      fields: [quote, date]
+      primary: quote
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: quote
+        label: Note
+        description: Without quotation marks, they are added automatically.
+        type: text
+        required: true
+      - name: date
+        label: Date
+        type: date
+        required: true
+
+  - name: projects
+    label: Projects
+    type: collection
+    path: src/content/projects
+    filename: "{primary}.md"
+    view:
+      fields: [title, tag, order]
+      primary: title
+      default:
+        sort: order
+        order: asc
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: tag
+        label: Label
+        description: "For example: Operations system, Workflow tool, In progress"
+        type: string
+      - name: summary
+        label: Description
+        type: text
+        required: true
+      - name: image
+        label: Image or screenshot (optional)
+        type: image
+      - name: link
+        label: Link (optional)
+        description: A web address, or leave empty.
+        type: string
+      - name: file
+        label: Downloadable file (optional)
+        description: PDF, template or other material visitors can download.
+        type: file
+      - name: order
+        label: Position
+        description: 1 = first
+        type: number
+
+  - name: home
+    label: Homepage highlights
+    type: file
+    path: src/_data/home.json
+    format: json
+    fields:
+      - name: highlights
+        label: Small cards next to the featured essay
+        type: object
+        list: true
+        fields:
+          - name: label
+            label: Topic
+            type: string
+          - name: type
+            label: Type
+            description: "For example: Field note, Perspective"
+            type: string
+          - name: title
+            label: Title
+            type: string
+          - name: link
+            label: Link (optional)
+            type: string
+
+  - name: legal
+    label: Impressum details
+    type: file
+    path: src/_data/legal.json
+    format: json
+    fields:
+      - name: name
+        label: Full name
+        type: string
+      - name: street
+        label: Street and number
+        type: string
+      - name: postcode
+        label: Postcode
+        type: string
+      - name: city
+        label: City
+        type: string
+      - name: country
+        label: Country
+        type: string
+      - name: email
+        label: Contact email
+        type: string
+      - name: phone
+        label: Phone (optional)
+        type: string
+      - name: newsletterProvider
+        label: Newsletter provider (name and address)
+        type: string

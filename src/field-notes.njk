@@ -1,0 +1,15 @@
+---
+layout: layouts/base.njk
+title: Field Notes
+description: Short observations from real work, teams, shifts and service operations.
+activeNav: /field-notes.html
+permalink: /field-notes.html
+---
+<section class="shell page-hero"><p class="eyebrow">Observed close to the work</p><h1>Field Notes</h1><p class="lede">Shorter ideas about management, service, standards and what becomes visible when you stay close to the operation.</p></section>
+<section class="shell section">
+<div class="notes-grid">
+{%- for note in collections.notes %}
+<article class="note-card"><blockquote>“{{ note.data.quote }}”</blockquote><time datetime="{{ note.date | isoDate }}">{{ note.date | readableDate }}</time></article>
+{%- endfor %}
+</div>
+</section>

@@ -1,0 +1,22 @@
+{
+  "name": "stiven-catalyst",
+  "version": "1.0.0",
+  "description": "Stiven Catalyst: publication on leadership, operations, people and systems.",
+  "scripts": {
+    "build": "eleventy",
+    "start": "eleventy --serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stivenjanaqi/stiven-catalyst.git"
+  },
+  "bugs": {
+    "url": "https://github.com/stivenjanaqi/stiven-catalyst/issues"
+  },
+  "homepage": "https://github.com/stivenjanaqi/stiven-catalyst#readme",
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.6"
+  },
+  "private": true,
+  "type": "module"
+}

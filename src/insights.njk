@@ -1,0 +1,30 @@
+---
+layout: layouts/base.njk
+title: Insights
+description: Essays and practical thinking on leadership, operations, people and management.
+activeNav: /insights.html
+permalink: /insights.html
+---
+  <section class="shell page-hero">
+    <p class="eyebrow">Essays & analysis</p>
+    <h1>Insights</h1>
+    <p class="lede">Longer thinking on leadership, operations, accountability, service and the systems that shape performance.</p>
+  </section>
+  <section class="shell listing">
+    {%- for item in collections.insights %}
+    {%- if item.data.status == "soon" %}
+    <div class="list-row">
+      <span class="number">{{ item.data.number }}</span>
+      <div><h2>{{ item.data.title }}</h2><p>{{ item.data.summary }}</p></div>
+      <span class="row-meta">{{ item.data.category }} · Soon</span>
+    </div>
+    {%- else %}
+    <a class="list-row" href="{{ item.url }}">
+      <span class="number">{{ item.data.number }}</span>
+      <div><h2>{{ item.data.title }}</h2><p>{{ item.data.summary }}</p></div>
+      <span class="row-meta">{{ item.data.category }}{% if item.data.read_time %} · {{ item.data.read_time | replace(" read", "") }}{% endif %}</span>
+    </a>
+    {%- endif %}
+    {%- endfor %}
+  </section>
+{% include "partials/newsletter.njk" %}
