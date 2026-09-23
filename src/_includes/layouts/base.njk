@@ -1,0 +1,90 @@
+{%- set shortTitle = seo_title or title -%}
+{%- set pageTitle = (shortTitle + " | " + site.title) if shortTitle else (site.title + " | Leadership, Operations & Ideas") -%}
+{%- set pageDescription = description or summary or site.description -%}
+{%- set nav = [
+  ["/", "Home"],
+  ["/insights.html", "Insights"],
+  ["/field-notes.html", "Field Notes"],
+  ["/projects.html", "Projects"],
+  ["/about.html", "About"]
+] -%}
+{%- set hasLegal = legal.street and legal.city -%}
+<!doctype html>
+<html lang="{{ lang or 'en' }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{ pageTitle }}</title>
+  <meta name="description" content="{{ pageDescription }}">
+  <meta name="theme-color" content="#070a0d">
+{%- if not noindex %}
+  <link rel="canonical" href="{{ page.url | absoluteUrl }}">
+  <meta property="og:type" content="{{ ogType or 'website' }}">
+  <meta property="og:site_name" content="{{ site.title }}">
+  <meta property="og:title" content="{{ ogTitle or title or site.title }}">
+  <meta property="og:description" content="{{ pageDescription }}">
+  <meta property="og:url" content="{{ page.url | absoluteUrl }}">
+  <meta property="og:image" content="{{ (ogImage or '/social.png') | absoluteUrl }}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+{%- else %}
+  <meta name="robots" content="noindex">
+{%- endif %}
+  <link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="/feed.xml">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem("sc-theme")||"dark"}catch(e){document.documentElement.dataset.theme="dark"}</script>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="brand" href="/" aria-label="Stiven Catalyst home">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span>Stiven Catalyst</span>
+    </a>
+    <nav class="main-nav" aria-label="Primary">
+      {%- for item in nav %}
+      <a{% if activeNav == item[0] %} aria-current="page"{% endif %} href="{{ item[0] }}">{{ item[1] }}</a>
+      {%- endfor %}
+    </nav>
+    <div class="header-actions">
+      <button class="icon-button" type="button" data-theme-toggle aria-label="Toggle theme"><svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg><svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.6A8.2 8.2 0 0 1 9.4 4a8.2 8.2 0 1 0 10.6 10.6z"/></svg></button>
+      <button class="menu-button" type="button" data-menu-toggle aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+  <nav id="mobile-menu" class="mobile-panel" data-mobile-panel data-open="false" aria-label="Mobile">
+    {%- for item in nav %}
+    <a{% if activeNav == item[0] %} aria-current="page"{% endif %} href="{{ item[0] }}">{{ item[1] }}</a>
+    {%- endfor %}
+  </nav>
+</header>
+
+<main id="main">
+{{ content | safe }}
+</main>
+
+<footer class="site-footer">
+  <div class="shell footer-grid">
+    <div>
+      <a class="brand" href="/" aria-label="Stiven Catalyst home"><span class="brand-mark" aria-hidden="true"></span><span>Stiven Catalyst</span></a>
+      <p class="footer-small">© <span data-year>{{ year }}</span> Stiven Catalyst. Clarity into action.</p>
+      <p class="footer-legal">
+        {%- if hasLegal %}<a href="/impressum.html">Impressum</a><a href="/datenschutz.html">Datenschutz</a>{% endif -%}
+        <a href="/feed.xml">RSS</a>
+      </p>
+    </div>
+    <nav class="footer-links" aria-label="Footer">
+      <a href="/insights.html">Insights</a>
+      <a href="/field-notes.html">Field Notes</a>
+      <a href="/projects.html">Projects</a>
+      <a href="/about.html">About</a>
+      <a href="mailto:{{ site.email }}">Email</a>
+    </nav>
+  </div>
+</footer>
+<script src="/script.js"></script>
+</body>
+</html>

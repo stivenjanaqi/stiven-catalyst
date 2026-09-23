@@ -1,0 +1,19 @@
+---
+layout: layouts/base.njk
+activeNav: /insights.html
+ogType: article
+---
+<section class="shell article-hero">
+  <p class="eyebrow">{{ category }} · Essay</p>
+  <h1>{{ title }}</h1>
+  {%- if deck %}
+  <p class="article-deck">{{ deck }}</p>
+  {%- endif %}
+</section>
+<section class="shell article-body">
+  <aside class="article-aside">{{ author or site.author }}<br><time datetime="{{ page.date | isoDate }}">{{ page.date | readableDate }}</time>{% if read_time %}<br>{{ read_time }} read{% endif %}</aside>
+  <article class="article-content">
+{{ content | safe }}
+  </article>
+</section>
+{% include "partials/newsletter.njk" %}

@@ -1,0 +1,26 @@
+---
+layout: layouts/base.njk
+title: Projects
+description: Selected systems, tools and operational projects by Stiven Janaqi.
+activeNav: /projects.html
+permalink: /projects.html
+---
+<section class="shell page-hero"><p class="eyebrow">Built work</p><h1>Projects</h1><p class="lede">Tools, operational systems and working ideas designed to make everyday work clearer, faster and more reliable.</p></section>
+<section class="shell project-grid">
+{%- for project in collections.projects %}
+<article class="project-card">
+  {%- if project.data.image %}<img class="project-image" src="{{ project.data.image }}" alt="" loading="lazy">{% endif %}
+  <span class="tag">{{ project.data.tag }}</span>
+  <div>
+    <h2>{{ project.data.title }}</h2>
+    <p>{{ project.data.summary }}</p>
+    {%- if project.data.link %}
+    <a class="text-link project-link" href="{{ project.data.link }}">View project <span aria-hidden="true">→</span></a>
+    {%- endif %}
+    {%- if project.data.file %}
+    <a class="text-link project-link" href="{{ project.data.file }}" download>Download <span aria-hidden="true">↓</span></a>
+    {%- endif %}
+  </div>
+</article>
+{%- endfor %}
+</section>
