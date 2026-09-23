@@ -23,8 +23,11 @@
   <p>Diese Website setzt keine Cookies und verwendet keine Analyse- oder Tracking-Dienste. Schriftarten werden lokal von diesem Server geladen; es werden keine Verbindungen zu Google Fonts oder anderen Drittanbietern hergestellt.</p>
   <p>Wenn Sie zwischen hellem und dunklem Design wechseln, wird diese Einstellung ausschließlich in Ihrem Browser gespeichert (Local Storage) und nicht an mich übertragen. Dies ist für die von Ihnen gewünschte Funktion unbedingt erforderlich (§ 25 Abs. 2 Nr. 2 TDDDG).</p>
 
-  <h2>4. Kontakt per E-Mail</h2>
-  <p>Wenn Sie mir eine E-Mail schreiben, verarbeite ich Ihre Angaben ausschließlich zur Bearbeitung Ihrer Anfrage. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b bzw. lit. f DSGVO. Die Daten werden gelöscht, sobald sie dafür nicht mehr erforderlich sind und keine gesetzlichen Aufbewahrungspflichten bestehen.</p>
+  <h2>4. Kontakt per E-Mail{% if site.contact.action %} und Kontaktformular{% endif %}</h2>
+  <p>Wenn Sie mir eine E-Mail schreiben{% if site.contact.action %} oder das Kontaktformular nutzen{% endif %}, verarbeite ich Ihre Angaben (Name, E-Mail-Adresse, Nachricht) ausschließlich zur Bearbeitung Ihrer Anfrage. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b bzw. lit. f DSGVO. Die Daten werden gelöscht, sobald sie dafür nicht mehr erforderlich sind und keine gesetzlichen Aufbewahrungspflichten bestehen.</p>
+{%- if site.contact.action %}
+  <p>Das Kontaktformular wird über {{ site.contact.provider or "einen externen Formulardienst" }} an mich weitergeleitet. Mit dem Anbieter besteht ein Vertrag zur Auftragsverarbeitung nach Art. 28 DSGVO.</p>
+{%- endif %}
 {%- if site.newsletter.action %}
 
   <h2>5. Newsletter</h2>
@@ -33,5 +36,5 @@
 {%- endif %}
 
   <h2>{{ "6" if site.newsletter.action else "5" }}. Ihre Rechte</h2>
-  <p>Sie haben das Recht auf Auskunft (Art. 15 DSGVO), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18), Datenübertragbarkeit (Art. 20) und Widerspruch (Art. 21). Eine erteilte Einwilligung können Sie jederzeit mit Wirkung für die Zukunft widerrufen. Außerdem können Sie sich bei einer Datenschutz-Aufsichtsbehörde beschweren, insbesondere in dem Bundesland Ihres Wohnsitzes.</p>
+  <p>Sie haben das Recht auf Auskunft (Art. 15 DSGVO), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18), Datenübertragbarkeit (Art. 20) und Widerspruch (Art. 21). Eine erteilte Einwilligung können Sie jederzeit mit Wirkung für die Zukunft widerrufen. Außerdem können Sie sich bei einer Datenschutz-Aufsichtsbehörde beschweren, insbesondere in dem Mitgliedstaat Ihres gewöhnlichen Aufenthalts oder Arbeitsplatzes (Art. 77 DSGVO).</p>
 </section>
