@@ -1,0 +1,26 @@
+[
+  {
+    "name": "KPI Diagnostic",
+    "type": "Diagnostic",
+    "time": "2 min",
+    "summary": "A number turned red. Ten statements show whether the cause is clarity, skill, capacity, process design or ownership, with first moves for each.",
+    "url": "/tools/kpi-diagnostic/",
+    "cta": "Start the diagnostic"
+  },
+  {
+    "name": "5 Whys",
+    "type": "Worksheet",
+    "time": "10 min",
+    "summary": "Move from a symptom to a root cause you can change, then agree one countermeasure, one owner and one check. Print it or save it as PDF.",
+    "url": "/tools/five-whys/",
+    "cta": "Open the worksheet"
+  },
+  {
+    "name": "Shift Handover",
+    "type": "Checklist",
+    "time": "Soon",
+    "summary": "Build a handover that carries open issues, risks and ownership into the next shift, instead of leaving them in someone's head.",
+    "url": "",
+    "cta": ""
+  }
+]

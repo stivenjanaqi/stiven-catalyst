@@ -1,0 +1,67 @@
+{
+  "scale": ["Not true", "Partly", "Mostly", "Fully true"],
+  "causes": {
+    "clarity": {
+      "name": "Clarity",
+      "meaning": "People are not working to the same picture of \"good\". The standard, the target or the reason behind it is not shared.",
+      "moves": [
+        "Write the standard in one sentence people can repeat.",
+        "Show what good looks like with a real example, not a slide.",
+        "Explain why the number matters to the next person in the process."
+      ],
+      "question": "Ask three people: what does \"done right\" look like here?"
+    },
+    "skill": {
+      "name": "Skill",
+      "meaning": "The process can work, but not everyone can run it reliably yet. Experience is carrying the result.",
+      "moves": [
+        "Pair newer people with a strong performer for a few shifts.",
+        "Turn the critical steps into a one-page checklist.",
+        "Check understanding by watching the work, not by asking \"is it clear?\""
+      ],
+      "question": "Where exactly does it go wrong the first time someone does this alone?"
+    },
+    "capacity": {
+      "name": "Capacity",
+      "meaning": "The work does not fit into the time or people available. Steps are dropped under pressure.",
+      "moves": [
+        "Put the KPI next to volume and staffing by hour or by day.",
+        "Protect the critical steps at peak time and drop the non-essential ones first.",
+        "Move work away from the peak wherever you can."
+      ],
+      "question": "What do people skip when it gets busy?"
+    },
+    "design": {
+      "name": "Process design",
+      "meaning": "The process itself produces the error. Different people get the same result because the system leads them there.",
+      "moves": [
+        "Walk the process end to end and time each step.",
+        "Make the right way the easy way: layout, tools, defaults.",
+        "Remove steps that only exist because of old problems."
+      ],
+      "question": "What makes the wrong way faster than the right way?"
+    },
+    "ownership": {
+      "name": "Ownership",
+      "meaning": "The work falls between people, shifts or teams. Everyone does their part, and the gap belongs to nobody.",
+      "moves": [
+        "Name one owner for each handoff.",
+        "Agree what \"handed over\" means: what, in which state, by when.",
+        "Review misses at the handoff, not only at the end of the line."
+      ],
+      "question": "At which moment does this become nobody's job?"
+    }
+  },
+  "statements": [
+    { "cause": "clarity", "text": "If you ask different people what the standard is, you get different answers." },
+    { "cause": "capacity", "text": "The number gets worse at peak times, on busy days or with fewer people on shift." },
+    { "cause": "design", "text": "The same error keeps coming back, even when different people do the work." },
+    { "cause": "skill", "text": "The problem is concentrated among newer or less experienced people." },
+    { "cause": "ownership", "text": "Problems appear at handoffs between shifts, teams or systems." },
+    { "cause": "clarity", "text": "The target changed recently, or the reason behind it was never explained." },
+    { "cause": "design", "text": "Tools, layout or systems make the right way slower than the wrong way." },
+    { "cause": "capacity", "text": "People skip steps because there is not enough time to do them all." },
+    { "cause": "ownership", "text": "When something goes wrong, it is unclear who should have caught it." },
+    { "cause": "skill", "text": "Results improve clearly when an experienced person is on the same shift." }
+  ]
+}

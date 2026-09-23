@@ -1,0 +1,12 @@
+<article class="tool-card{% if not tool.url %} is-soon{% endif %}">
+  <div class="card-meta"><span>{{ tool.type }}</span><span>{{ tool.time }}</span></div>
+  <div>
+    <h{{ level or 2 }}>{{ tool.name }}</h{{ level or 2 }}>
+    <p>{{ tool.summary }}</p>
+    {%- if tool.url %}
+    <a class="text-link" href="{{ tool.url }}">{{ tool.cta }} <span aria-hidden="true">→</span></a>
+    {%- else %}
+    <span class="soon">Coming soon</span>
+    {%- endif %}
+  </div>
+</article>

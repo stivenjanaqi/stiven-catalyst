@@ -1,0 +1,75 @@
+---
+layout: layouts/base.njk
+title: 5 Whys Worksheet
+description: "A guided 5 Whys worksheet: move from a symptom to a root cause, agree one countermeasure and print or save the result."
+activeNav: /tools.html
+permalink: /tools/five-whys/
+---
+<section class="shell page-hero tool-hero">
+  <p class="eyebrow">Free tool · Root cause</p>
+  <h1>5 Whys</h1>
+  <p class="lede">Start from what happened, not from who did it. Ask why until the answer is something you can change in the process, then agree one countermeasure and one owner.</p>
+</section>
+
+<section class="shell tool-layout">
+  <form class="tool-panel worksheet" data-worksheet>
+    <div class="field">
+      <label for="ws-problem">Problem</label>
+      <textarea id="ws-problem" name="problem" rows="3" placeholder="What happened, where, when and how often? e.g. 14 late check-outs last week on the evening shift" data-store></textarea>
+    </div>
+
+    <ol class="why-list" data-whys>
+      {%- for i in range(1, 6) %}
+      <li class="field why">
+        <label for="ws-why-{{ i }}">Why {{ i }}?</label>
+        <input id="ws-why-{{ i }}" name="why{{ i }}" autocomplete="off" data-store>
+      </li>
+      {%- endfor %}
+    </ol>
+    <button class="button-ghost" type="button" data-add-why>+ Add another why</button>
+
+    <div class="worksheet-grid">
+      <div class="field wide">
+        <label for="ws-cause">Root cause</label>
+        <textarea id="ws-cause" name="cause" rows="2" placeholder="The last answer that you can act on" data-store></textarea>
+      </div>
+      <div class="field wide">
+        <label for="ws-action">Countermeasure</label>
+        <textarea id="ws-action" name="action" rows="2" placeholder="One change to the process, not a reminder" data-store></textarea>
+      </div>
+      <div class="field">
+        <label for="ws-owner">Owner</label>
+        <input id="ws-owner" name="owner" autocomplete="off" data-store>
+      </div>
+      <div class="field">
+        <label for="ws-due">Due date</label>
+        <input id="ws-due" name="due" type="date" data-store>
+      </div>
+      <div class="field wide">
+        <label for="ws-check">How will you know it worked?</label>
+        <input id="ws-check" name="check" placeholder="e.g. Late check-outs below 3 per week for four weeks" autocomplete="off" data-store>
+      </div>
+    </div>
+
+    <div class="tool-actions">
+      <button class="button-primary" type="button" data-print>Print or save as PDF</button>
+      <button class="button-secondary" type="button" data-copy>Copy as text</button>
+      <button class="button-secondary" type="button" data-clear>Clear</button>
+    </div>
+    <p class="form-note" data-status aria-live="polite">Your draft is kept only in this browser.</p>
+  </form>
+
+  <aside class="tool-aside">
+    <p class="kicker">Good whys</p>
+    <ul class="tips">
+      <li><strong>Facts, not guesses.</strong> Go and look before you answer.</li>
+      <li><strong>Process, not people.</strong> "Anna forgot" is not a root cause. Why was it possible to forget?</li>
+      <li><strong>Stop at something you can change.</strong> Sometimes that is at why 3, sometimes at why 7.</li>
+      <li><strong>Test it backwards.</strong> Read from the root cause up with "therefore". If the chain holds, you are close.</li>
+      <li><strong>A reminder is not a fix.</strong> If the countermeasure is "tell people again", ask one more why.</li>
+    </ul>
+    <p class="privacy-note">Nothing you write is sent anywhere. It stays on this device until you clear it.</p>
+  </aside>
+</section>
+
+<script src="/js/five-whys.js" defer></script>
