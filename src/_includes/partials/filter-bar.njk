@@ -1,0 +1,17 @@
+{#- Search and topic chips; hidden until filter.js runs, so the page works without JavaScript. -#}
+<div class="filter-bar" data-filter-controls hidden>
+  <div class="filter-search">
+    <label class="visually-hidden" for="filter-search">{{ searchLabel }}</label>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+    <input id="filter-search" type="search" placeholder="{{ searchLabel }}" autocomplete="off" data-filter-search>
+  </div>
+  {%- if filterTopics and filterTopics.length > 1 %}
+  <div class="filter-chips" role="group" aria-label="Filter by topic">
+    <button type="button" class="chip" aria-pressed="true" data-topic="">All</button>
+    {%- for topic in filterTopics %}
+    <button type="button" class="chip" aria-pressed="false" data-topic="{{ topic }}">{{ topic }}</button>
+    {%- endfor %}
+  </div>
+  {%- endif %}
+  <p class="filter-count" data-filter-count aria-live="polite"></p>
+</div>

@@ -6,10 +6,25 @@ activeNav: /field-notes.html
 permalink: /field-notes.html
 ---
 <section class="shell page-hero"><p class="eyebrow">Observed close to the work</p><h1>Field Notes</h1><p class="lede">Shorter ideas about management, service, standards and what becomes visible when you stay close to the operation.</p></section>
-<section class="shell section">
+<section class="shell section" data-filter-list>
+{%- set searchLabel = "Search notes" %}
+{%- set filterTopics = collections.notes | topics("topic") %}
+{% include "partials/filter-bar.njk" %}
 <div class="notes-grid">
 {%- for note in collections.notes %}
-<article class="note-card"><blockquote>“{{ note.data.quote }}”</blockquote><time datetime="{{ note.date | isoDate }}">{{ note.date | readableDate }}</time></article>
+<article class="note-card" id="note-{{ note.fileSlug }}" data-filter-item data-topic="{{ note.data.topic }}" data-search="{{ [note.data.quote, note.data.topic] | join(' ') | lower }}">
+  <blockquote>“{{ note.data.quote }}”</blockquote>
+  <div class="note-foot">
+    <time datetime="{{ note.date | isoDate }}">{{ note.date | readableDate }}{% if note.data.topic %} · {{ note.data.topic }}{% endif %}</time>
+    <div class="note-actions" data-note-actions hidden>
+      <button type="button" data-copy-text="“{{ note.data.quote }}” (Stiven Janaqi, Stiven Catalyst) {{ ('/field-notes.html#note-' + note.fileSlug) | absoluteUrl }}">Copy</button>
+      <button type="button" data-share-url="{{ ('/field-notes.html#note-' + note.fileSlug) | absoluteUrl }}" data-share-text="“{{ note.data.quote }}”">Share</button>
+    </div>
+  </div>
+</article>
 {%- endfor %}
 </div>
+<p class="filter-empty" data-filter-empty hidden>No notes match that yet. Try another word.</p>
 </section>
+<script src="/js/filter.js" defer></script>
+<script src="/js/share.js" defer></script>
