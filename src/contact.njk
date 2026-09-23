@@ -26,7 +26,7 @@ permalink: /contact.html
     </div>
     <input type="text" name="_gotcha" class="visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
     <button type="submit">Send message</button>
-    <p class="form-note">Your details are only used to reply to you.{% if legal.street %} Details in the <a href="/datenschutz.html">privacy policy</a>.{% endif %}</p>
+    <p class="form-note">Your details are only used to reply to you.{% if legal.name and legal.city %} Details in the <a href="/datenschutz.html">privacy policy</a>.{% endif %}</p>
   </form>
   {%- endif %}
   <aside class="contact-aside">

@@ -60,8 +60,8 @@ Skedarët e ngarkuar ruhen te **Media** dhe mund të përdoren kudo.
 
 ## 5. Impressum dhe Datenschutz
 
-Plotëso **Impressum details** (emri, adresa, email). Sapo adresa të jetë e plotësuar,
-faqet **Impressum** dhe **Datenschutz** krijohen vetë dhe dalin në fund të faqes.
+Të dhënat janë te **Impressum details** (emri, qyteti, email; rruga është opsionale).
+Faqet **Impressum** dhe **Datenschutz** krijohen vetë dhe dalin në fund të faqes.
 
 > Teksti i Datenschutz është draft i mirë, por **nuk është këshillë ligjore**.
 > Kontrolloje një herë me një gjenerator (p.sh. e-recht24.de) ose me një jurist.

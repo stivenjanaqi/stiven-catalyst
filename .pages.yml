@@ -169,7 +169,7 @@ content:
         label: Full name
         type: string
       - name: street
-        label: Street and number
+        label: Street and number (optional)
         type: string
       - name: postcode
         label: Postcode
