@@ -1,0 +1,114 @@
+---
+layout: layouts/base.njk
+title: Shift Handover
+description: "A structured shift handover: open issues with one owner each, risks for the next shift, key numbers and a final check. Print it or copy it as text."
+activeNav: /tools.html
+permalink: /tools/shift-handover/
+---
+<section class="shell page-hero tool-hero">
+  <p class="eyebrow">Free tool · Checklist</p>
+  <h1>Shift Handover</h1>
+  <p class="lede">A shift ends; the work does not. Hand over open issues with one owner each, name the risks for the next shift and leave nothing in someone's head.</p>
+</section>
+
+<section class="shell tool-layout">
+  <form class="tool-panel handover" data-handover>
+    <noscript><p class="form-note">This tool needs JavaScript to run.</p></noscript>
+
+    <div class="handover-meta">
+      <div class="field wide">
+        <label for="ho-area">Area or team</label>
+        <input id="ho-area" data-meta="area" placeholder="e.g. Front office, Warehouse B, Dispatch" autocomplete="off">
+      </div>
+      <div class="field">
+        <label for="ho-date">Date</label>
+        <input id="ho-date" data-meta="date" type="date">
+      </div>
+      <div class="field">
+        <label for="ho-shift">Shift</label>
+        <select id="ho-shift" data-meta="shift">
+          <option>Morning</option>
+          <option>Evening</option>
+          <option>Night</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="ho-from">Handed over by</label>
+        <input id="ho-from" data-meta="from" autocomplete="off">
+      </div>
+      <div class="field">
+        <label for="ho-to">Received by</label>
+        <input id="ho-to" data-meta="to" autocomplete="off">
+      </div>
+    </div>
+
+    <section class="handover-block">
+      <div class="block-head">
+        <h2>Key numbers</h2>
+        <p>The few figures the next shift needs at a glance.</p>
+      </div>
+      <div class="rows" data-list="numbers"></div>
+      <button class="button-ghost" type="button" data-add="numbers">+ Add number</button>
+    </section>
+
+    <section class="handover-block">
+      <div class="block-head">
+        <h2>Open issues</h2>
+        <p>Everything not finished. Each issue gets one owner and a time.</p>
+      </div>
+      <div class="rows" data-list="issues"></div>
+      <button class="button-ghost" type="button" data-add="issues">+ Add issue</button>
+    </section>
+
+    <section class="handover-block">
+      <div class="block-head">
+        <h2>Risks for the next shift</h2>
+        <p>What could go wrong, and what to watch.</p>
+      </div>
+      <div class="rows" data-list="risks"></div>
+      <button class="button-ghost" type="button" data-add="risks">+ Add risk</button>
+    </section>
+
+    <section class="handover-block">
+      <div class="block-head">
+        <h2>Done this shift</h2>
+        <p>Finished work the next shift should know about.</p>
+      </div>
+      <div class="rows" data-list="done"></div>
+      <button class="button-ghost" type="button" data-add="done">+ Add item</button>
+    </section>
+
+    <section class="handover-block">
+      <div class="block-head"><h2><label for="ho-notes">Notes</label></h2></div>
+      <textarea id="ho-notes" data-meta="notes" rows="3"></textarea>
+    </section>
+
+    <section class="handover-block">
+      <div class="block-head">
+        <h2>Before you leave</h2>
+        <p>Tick only what is really done.</p>
+      </div>
+      <div class="rows" data-list="checks"></div>
+      <button class="button-ghost" type="button" data-add="checks">+ Add check</button>
+    </section>
+
+    <div class="tool-actions">
+      <button class="button-primary" type="button" data-print>Print or save as PDF</button>
+      <button class="button-secondary" type="button" data-copy>Copy as text</button>
+      <button class="button-secondary" type="button" data-next>Next shift</button>
+      <button class="button-secondary" type="button" data-clear>Clear</button>
+    </div>
+    <p class="form-note" data-status aria-live="polite">Your handover is kept only in this browser.</p>
+  </form>
+
+  <aside class="tool-aside">
+    <p class="kicker">Handover check</p>
+    <ul class="quality" data-quality aria-live="polite"></ul>
+    <p><strong>Next shift</strong> starts a new handover and carries over every issue that is not done.</p>
+    <p class="privacy-note">Nothing you write is sent anywhere. Avoid guest or customer names; use room, order or ticket numbers instead.</p>
+  </aside>
+</section>
+
+<section class="shell print-sheet" data-print-sheet aria-hidden="true"></section>
+
+<script src="/js/shift-handover.js" defer></script>
