@@ -5,8 +5,8 @@
   lang: "de",
   noindex: true,
   eleventyExcludeFromCollections: true,
-  // Only published once the address in src/_data/legal.json is filled in.
-  permalink: (data) => (data.legal.street && data.legal.city ? "/impressum.html" : false),
+  // Only published once the name and city in src/_data/legal.json are filled in.
+  permalink: (data) => (data.legal.name && data.legal.city ? "/impressum.html" : false),
 }
 ---
 <section class="shell page-hero legal-hero">
@@ -14,14 +14,14 @@
   <h1>Impressum</h1>
 </section>
 <section class="shell legal">
-  <h2>Angaben gemäß § 5 DDG</h2>
-  <p>{{ legal.name }}<br>{{ legal.street }}<br>{{ legal.postcode }} {{ legal.city }}<br>{{ legal.country }}</p>
+  <h2>Anbieter</h2>
+  <p>{{ legal.name }}<br>{% if legal.street %}{{ legal.street }}<br>{% endif %}{{ legal.postcode }} {{ legal.city }}<br>{{ legal.country }}</p>
 
   <h2>Kontakt</h2>
   <p>E-Mail: <a href="mailto:{{ legal.email or site.email }}">{{ legal.email or site.email }}</a>{% if legal.phone %}<br>Telefon: {{ legal.phone }}{% endif %}{% if site.contact.action %}<br>Kontaktformular: <a href="/contact.html">Zum Kontaktformular</a>{% endif %}</p>
 
-  <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
-  <p>{{ legal.name }}<br>{{ legal.street }}<br>{{ legal.postcode }} {{ legal.city }}</p>
+  <h2>Verantwortlich für den Inhalt</h2>
+  <p>{{ legal.name }}<br>{% if legal.street %}{{ legal.street }}<br>{% endif %}{{ legal.postcode }} {{ legal.city }}, {{ legal.country }}</p>
 
   <h2>Haftung für Links</h2>
   <p>Diese Website enthält Links zu externen Websites Dritter. Auf deren Inhalte habe ich keinen Einfluss; für sie ist stets der jeweilige Anbieter verantwortlich. Bei Bekanntwerden von Rechtsverletzungen werden entsprechende Links umgehend entfernt.</p>

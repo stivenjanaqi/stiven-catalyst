@@ -8,7 +8,7 @@
   ["/projects.html", "Projects"],
   ["/about.html", "About"]
 ] -%}
-{%- set hasLegal = legal.street and legal.city -%}
+{%- set hasLegal = legal.name and legal.city -%}
 <!doctype html>
 <html lang="{{ lang or 'en' }}">
 <head>
