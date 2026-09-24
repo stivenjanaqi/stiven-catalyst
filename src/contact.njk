@@ -32,5 +32,9 @@ permalink: /contact.html
   <aside class="contact-aside">
     <p class="kicker">Email</p>
     <a class="text-link" href="mailto:{{ site.email }}">{{ site.email }} <span aria-hidden="true">→</span></a>
+    {%- if site.billingEmail %}
+    <p class="kicker">Invoices &amp; billing</p>
+    <a class="text-link" href="mailto:{{ site.billingEmail }}">{{ site.billingEmail }} <span aria-hidden="true">→</span></a>
+    {%- endif %}
   </aside>
 </section>
