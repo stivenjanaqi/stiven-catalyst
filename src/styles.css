@@ -867,6 +867,7 @@ button, input { font: inherit; }
 .contact-form .form-note { margin-left: 0; }
 
 .contact-aside .text-link { font-size: 18px; }
+.contact-aside .text-link + .kicker { margin-top: 32px; }
 
 /* Tools */
 .tool-grid {

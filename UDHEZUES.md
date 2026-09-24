@@ -10,7 +10,7 @@ Shkruan në një panel në browser, shtyp **Save**, dhe pas 1–2 minutash ndrys
 1. Hap **https://app.pagescms.org**
 2. Kliko **Sign in with GitHub** dhe hyr me llogarinë tënde.
 3. Kur ta kërkojë, jepi leje (**Install**) për repository-n `stiven-catalyst`.
-4. Zgjidh `stivenjanaqi / stiven-catalyst`, branch **main**.
+4. Zgjidh `catalyst-al / stiven-catalyst`, branch **main**.
 
 Në të majtë do shohësh:
 
