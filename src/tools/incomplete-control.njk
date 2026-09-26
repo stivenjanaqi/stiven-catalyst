@@ -1,0 +1,15 @@
+---
+layout: layouts/base.njk
+title: Incomplete Control
+description: "A private log for incomplete orders: missing items, short quantities, wrong items and missing parcels. Incomplete rate, complete orders, DPMO and sigma level, a Pareto of causes and where in the process orders go wrong."
+activeNav: /tools.html
+permalink: /tools/incomplete-control/
+---
+<section class="shell page-hero tool-hero">
+  <p class="eyebrow">Free tool · Warehouse</p>
+  <h1>Incomplete Control</h1>
+  <p class="lede">An order that leaves without every item or parcel costs a redelivery and a customer's trust. Log each miss with where it went wrong and why. The tool shows your incomplete rate, the few causes behind most of it, and where to start.</p>
+</section>
+
+{% set cfg = incompleteControl %}
+{% include "partials/defect-log.njk" %}

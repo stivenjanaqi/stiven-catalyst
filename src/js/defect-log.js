@@ -1,9 +1,13 @@
 (() => {
-  const root = document.querySelector("[data-damage-control]");
-  const dataEl = document.getElementById("damage-control-data");
+  // Shared by Damage Control and Incomplete Control. Each page supplies its
+  // fields, wording, advice and example in #defect-log-data. The fields are
+  // always shift, stage, type and cause, in that order.
+  const root = document.querySelector("[data-defect-log]");
+  const dataEl = document.getElementById("defect-log-data");
   if (!root || !dataEl) return;
 
   const data = JSON.parse(dataEl.textContent);
+  const t = data.text;
   const KEY = data.storageKey;
   const CHECK_KEY = `${KEY}-check`;
   const NOT_RECORDED = "Not recorded";
@@ -17,7 +21,7 @@
   const logCount = root.querySelector("[data-log-count]");
   const entryStatus = root.querySelector("[data-entry-status]");
   const importStatus = root.querySelector("[data-import-status]");
-  const pasteArea = root.querySelector("#dc-paste");
+  const pasteArea = root.querySelector("#dl-paste");
   const results = document.querySelector("[data-results]");
   const checkSection = document.querySelector("[data-floor-check]");
   const checkboxes = [...checkSection.querySelectorAll("input[type=checkbox]")];
@@ -46,6 +50,7 @@
   const euro = new Intl.NumberFormat("en-GB", { style: "currency", currency: "EUR" });
   const pct = (value, digits = 1) => `${(value * 100).toFixed(digits)}%`;
   const plural = (count, word, many = `${word}s`) => `${int.format(count)} ${count === 1 ? word : many}`;
+  const capital = (text) => text.charAt(0).toUpperCase() + text.slice(1);
 
   // Parsing, for the form and for rows pasted from a spreadsheet.
   const parseNumber = (value) => {
@@ -151,18 +156,18 @@
 
   const analyse = () => {
     const rows = state.rows;
-    const damaged = rows.reduce((sum, row) => sum + row.units, 0);
+    const total = rows.reduce((sum, row) => sum + row.units, 0);
     const costed = rows.filter((row) => row.cost != null);
     const cost = costed.reduce((sum, row) => sum + row.cost, 0);
     const volume = parseNumber(state.volume);
     const target = parseNumber(state.target) / 100;
-    const hasVolume = volume > 0 && damaged <= volume;
-    const rate = hasVolume ? damaged / volume : null;
+    const hasVolume = volume > 0 && total <= volume;
+    const rate = hasVolume ? total / volume : null;
 
     const causes = bySize(tally(rows, "cause"));
     let running = 0;
     causes.forEach((item) => {
-      item.share = item.units / damaged;
+      item.share = item.units / total;
       item.vital = running < 0.8;
       running += item.share;
       item.cumulative = running;
@@ -176,10 +181,10 @@
 
     return {
       rows,
-      damaged,
+      total,
       cost: costed.length ? cost : null,
       volume: hasVolume ? volume : null,
-      volumeTooLow: volume > 0 && damaged > volume,
+      volumeTooLow: volume > 0 && total > volume,
       rate,
       dpmo: rate === null ? null : rate * 1e6,
       sigma: rate === null ? null : rate === 0 ? 6 : normInv(1 - rate) + 1.5,
@@ -190,7 +195,7 @@
       types: inOrder(tally(rows, "type"), "type"),
       topStage,
       topStageCause,
-      unknownShare: unknown / damaged,
+      unknownShare: unknown / total,
       days: new Set(rows.map((row) => row.date).filter(Boolean)).size,
     };
   };
@@ -205,9 +210,9 @@
       fields.forEach((f) => tr.append(el("td", null, row[f.name])));
       tr.append(el("td", "num", int.format(row.units)));
       tr.append(el("td", "num", row.cost == null ? "" : row.cost.toFixed(2)));
-      tr.append(el("td", "dc-note", row.note || ""));
+      tr.append(el("td", "dl-note", row.note || ""));
       const cell = el("td");
-      const remove = el("button", "dc-remove", "×");
+      const remove = el("button", "dl-remove", "×");
       remove.type = "button";
       remove.dataset.remove = index;
       remove.setAttribute("aria-label", `Remove ${row.units} ${row.type} at ${row.stage}${row.date ? ` on ${row.date}` : ""}`);
@@ -218,27 +223,27 @@
     logWrap.hidden = !rows.length;
     logEmpty.hidden = rows.length > 0;
     const units = rows.reduce((sum, row) => sum + row.units, 0);
-    logCount.textContent = rows.length ? `${plural(rows.length, "entry", "entries")} · ${plural(units, "unit")}` : "";
+    logCount.textContent = rows.length ? `${plural(rows.length, "entry", "entries")} · ${plural(units, t.one, t.many)}` : "";
   };
 
   // Results.
   const barList = (items, total, options = {}) => {
-    const list = el("div", "dc-bars");
+    const list = el("div", "dl-bars");
     const max = Math.max(...items.map((item) => item.units));
     items.forEach((item, index) => {
-      const row = el("div", "dc-bar");
+      const row = el("div", "dl-bar");
       const highlight = options.highlight ? options.highlight(item) : false;
       if (highlight) row.classList.add("is-top");
-      row.title = `${item.key}: ${plural(item.units, "unit")} in ${plural(item.count, "entry", "entries")}, ${pct(item.units / total)} of all damage`;
-      const label = el("div", "dc-bar-label");
-      const name = el("span", "dc-bar-name");
-      if (options.ranked) name.append(el("span", "dc-rank", String(index + 1)));
+      row.title = `${item.key}: ${plural(item.units, t.one, t.many)} in ${plural(item.count, "entry", "entries")}, ${pct(item.units / total)} of all ${t.allNoun}`;
+      const label = el("div", "dl-bar-label");
+      const name = el("span", "dl-bar-name");
+      if (options.ranked) name.append(el("span", "dl-rank", String(index + 1)));
       name.append(item.key);
-      if (highlight && options.tag) name.append(el("span", "dc-tag", options.tag));
+      if (highlight && options.tag) name.append(el("span", "dl-tag", options.tag));
       label.append(name);
-      const value = el("span", "dc-bar-value");
+      const value = el("span", "dl-bar-value");
       value.append(el("strong", null, int.format(item.units)), ` · ${pct(item.units / total, 0)}`);
-      if (options.cumulative) value.append(el("span", "dc-cum", ` · ${pct(item.cumulative, 0)} cum.`));
+      if (options.cumulative) value.append(el("span", "dl-cum", ` · ${pct(item.cumulative, 0)} cum.`));
       label.append(value);
       const track = el("div", "bar-track");
       const fill = el("div", "bar-fill");
@@ -251,17 +256,17 @@
   };
 
   const panel = (title, note) => {
-    const box = el("article", "dc-panel");
+    const box = el("article", "dl-panel");
     box.append(el("h3", "result-label", title));
-    if (note) box.append(el("p", "dc-panel-note", note));
+    if (note) box.append(el("p", "dl-panel-note", note));
     return box;
   };
 
   const matrix = (result) => {
-    const wrap = el("div", "dc-table-wrap");
-    const table = el("table", "dc-table dc-matrix");
+    const wrap = el("div", "dl-table-wrap");
+    const table = el("table", "dl-table dl-matrix");
     const head = el("tr");
-    head.append(el("th", null, "Stage \\ type"));
+    head.append(el("th", null, `${fields[1].label} \\ ${fields[2].label.toLowerCase()}`));
     result.types.forEach((type) => {
       const th = el("th", "num", type.key);
       th.scope = "col";
@@ -285,11 +290,11 @@
         const value = cells.get(`${stage.key}\u0000${type.key}`) || 0;
         const td = el("td", "num", value ? int.format(value) : "");
         if (value) {
-          // One hue, stronger with more damage; the number is always shown.
+          // One hue, stronger with a higher count; the number is always shown.
           td.style.setProperty("--heat", `${Math.round(12 + (value / max) * 58)}%`);
           td.classList.add("is-heat");
           if (value === max) td.classList.add("is-max");
-          td.title = `${stage.key} · ${type.key}: ${plural(value, "unit")}`;
+          td.title = `${stage.key} · ${type.key}: ${plural(value, t.one, t.many)}`;
         }
         tr.append(td);
       });
@@ -301,45 +306,46 @@
   };
 
   const stat = (label, value, note) => {
-    const box = el("div", "dc-stat");
-    box.append(el("span", "dc-stat-label", label), el("strong", "dc-stat-value", value));
-    if (note) box.append(el("span", "dc-stat-note", note));
+    const box = el("div", "dl-stat");
+    box.append(el("span", "dl-stat-label", label), el("strong", "dl-stat-value", value));
+    if (note) box.append(el("span", "dl-stat-note", note));
     return box;
   };
 
   const targetText = (result) => {
     if (!result.target) return null;
     const allowed = Math.floor(result.target * result.volume);
-    const gap = result.damaged - allowed;
+    const gap = result.total - allowed;
     return gap > 0
-      ? { value: `${int.format(gap)} over`, note: `${int.format(gap)} fewer damaged units reach ${pct(result.target, 2)}` }
-      : { value: "On target", note: `${int.format(-gap)} units inside ${pct(result.target, 2)}` };
+      ? { value: `${int.format(gap)} over`, note: `${int.format(gap)} fewer ${t.many} reach ${pct(result.target, 2)}` }
+      : { value: "On target", note: `${int.format(-gap)} ${t.volumeNoun} inside ${pct(result.target, 2)}` };
   };
 
   const problemText = (result) => {
     const stage = result.topStage;
     const when = state.period ? `${state.period}: ` : "";
     const why = result.topStageCause ? `, mostly ${result.topStageCause.key.toLowerCase()}` : "";
-    return `${when}${plural(stage.units, "damaged unit")} found at ${stage.key} (${pct(stage.units / result.damaged, 0)} of all damage)${why}.`;
+    return `${when}${plural(stage.units, t.one, t.many)} ${t.stagePhrase} ${stage.key} (${pct(stage.units / result.total, 0)} of all ${t.allNoun})${why}.`;
   };
 
   const summaryText = (result) => {
-    const lines = ["Damage Control | Stiven Catalyst"];
+    const lines = [`${t.tool} | Stiven Catalyst`];
     if (state.period) lines.push(`Period: ${state.period}`);
-    lines.push("", `Damaged units: ${int.format(result.damaged)} in ${plural(result.rows.length, "entry", "entries")}`);
+    lines.push("", `${capital(t.many)}: ${int.format(result.total)} in ${plural(result.rows.length, "entry", "entries")}`);
     if (result.volume) {
-      lines.push(`Units handled: ${int.format(result.volume)}`);
-      lines.push(`Damage rate: ${pct(result.rate, 2)} · DPMO: ${int.format(Math.round(result.dpmo))} · Sigma level: ${result.sigma.toFixed(2)}`);
+      lines.push(`${t.volumeLabel}: ${int.format(result.volume)}`);
+      lines.push(`${t.rateLabel}: ${pct(result.rate, 2)} · DPMO: ${int.format(Math.round(result.dpmo))} · Sigma level: ${result.sigma.toFixed(2)}`);
+      if (t.complement) lines.push(`${t.complement.label}: ${pct(1 - result.rate, 2)}`);
     }
     const target = targetText(result);
     if (target) lines.push(`Target ${pct(result.target, 2)}: ${target.note}`);
     if (result.cost != null) lines.push(`Recorded cost: ${euro.format(result.cost)}`);
     lines.push("", "Pareto of causes:");
     result.causes.forEach((item) => lines.push(`- ${item.key}: ${item.units} (${pct(item.share, 0)}, cum. ${pct(item.cumulative, 0)})${item.vital ? " [vital few]" : ""}`));
-    lines.push("", "Where it was found:");
-    result.stages.forEach((item) => lines.push(`- ${item.key}: ${item.units} (${pct(item.units / result.damaged, 0)})`));
+    lines.push("", `${t.stageTitle}:`);
+    result.stages.forEach((item) => lines.push(`- ${item.key}: ${item.units} (${pct(item.units / result.total, 0)})`));
     lines.push("", "By shift:");
-    result.shifts.forEach((item) => lines.push(`- ${item.key}: ${item.units} (${pct(item.units / result.damaged, 0)})`));
+    result.shifts.forEach((item) => lines.push(`- ${item.key}: ${item.units} (${pct(item.units / result.total, 0)})`));
     lines.push("", `Start here: ${problemText(result)}`);
     const advice = data.stages[result.topStage.key];
     if (advice) {
@@ -378,17 +384,18 @@
     head.append(el("p", "kicker", state.period ? `Result · ${state.period}` : "Result"));
     const title = el("h2");
     if (result.rate !== null) {
-      title.append("Damage rate ", el("span", null, pct(result.rate, 2)));
+      title.append(`${t.rateLabel} `, el("span", null, pct(result.rate, 2)));
     } else {
-      title.append(el("span", null, int.format(result.damaged)), ` damaged ${result.damaged === 1 ? "unit" : "units"}`);
+      title.append(el("span", null, int.format(result.total)), ` ${result.total === 1 ? t.one : t.many}`);
     }
     head.append(title);
     results.append(head);
 
-    const stats = el("div", "dc-stats");
-    stats.append(stat("Damaged units", int.format(result.damaged), `${plural(result.rows.length, "entry", "entries")}${result.days ? ` over ${plural(result.days, "day")}` : ""}`));
+    const stats = el("div", "dl-stats");
+    stats.append(stat(capital(t.many), int.format(result.total), `${plural(result.rows.length, "entry", "entries")}${result.days ? ` over ${plural(result.days, "day")}` : ""}`));
     if (result.volume) {
-      stats.append(stat("DPMO", int.format(Math.round(result.dpmo)), "damaged per million units"));
+      if (t.complement) stats.append(stat(t.complement.label, pct(1 - result.rate, 2), t.complement.note));
+      stats.append(stat("DPMO", int.format(Math.round(result.dpmo)), `${t.many} per million ${t.volumeNoun}`));
       stats.append(stat("Sigma level", result.rate === 0 ? "6+" : result.sigma.toFixed(2), "short term, with 1.5 shift"));
       const target = targetText(result);
       if (target) stats.append(stat("Target", target.value, target.note));
@@ -397,41 +404,41 @@
     results.append(stats);
 
     if (result.volumeTooLow) {
-      results.append(el("p", "dc-warning", "More units are logged as damaged than units handled. Check the volume to see the rate, DPMO and sigma level."));
+      results.append(el("p", "dl-warning", `The log holds more ${t.many} than ${t.volumeLabel.toLowerCase()}. Check the volume to see the rate, DPMO and sigma level.`));
     } else if (!result.volume) {
-      results.append(el("p", "dc-warning", "Add the units handled in this period to see the damage rate, DPMO and sigma level."));
+      results.append(el("p", "dl-warning", `Add the ${t.volumeLabel.toLowerCase()} in this period to see the ${t.rateLabel.toLowerCase()}, DPMO and sigma level.`));
     }
 
-    const grid = el("div", "dc-result-grid");
+    const grid = el("div", "dl-result-grid");
 
     const vital = result.causes.filter((item) => item.vital);
     const vitalShare = vital.at(-1).cumulative;
-    const pareto = panel("Pareto of causes", `${vital.length} of ${result.causes.length} causes carry ${pct(vitalShare, 0)} of the damage. Fix these first.`);
-    pareto.append(barList(result.causes, result.damaged, { ranked: true, cumulative: true, highlight: (item) => item.vital, tag: "Vital few" }));
+    const pareto = panel("Pareto of causes", `${vital.length} of ${result.causes.length} causes carry ${pct(vitalShare, 0)} of the ${t.allNoun}. Fix these first.`);
+    pareto.append(barList(result.causes, result.total, { ranked: true, cumulative: true, highlight: (item) => item.vital, tag: "Vital few" }));
     grid.append(pareto);
 
-    const flow = panel("Where it is found", "In process order, from the dock door to the customer.");
-    flow.append(barList(result.stages, result.damaged, { highlight: (item) => item.key === result.topStage.key, tag: "Most" }));
+    const flow = panel(t.stageTitle, t.stageNote);
+    flow.append(barList(result.stages, result.total, { highlight: (item) => item.key === result.topStage.key, tag: "Most" }));
     grid.append(flow);
 
-    const types = panel("Stage and damage type", "Each cell counts damaged units. The darkest cell is the most specific place to look.");
+    const types = panel(t.matrixTitle, `Each cell counts ${t.many}. The darkest cell is the most specific place to look.`);
     types.append(matrix(result));
     grid.append(types);
 
-    const shifts = panel("By shift", "Counts only. A shift that handles more volume will log more damage, so compare with its share of the work.");
-    shifts.append(barList(result.shifts, result.damaged));
+    const shifts = panel("By shift", `Counts only. A shift that handles more volume will log more ${t.allNoun}, so compare with its share of the work.`);
+    shifts.append(barList(result.shifts, result.total));
     grid.append(shifts);
 
     results.append(grid);
 
-    // Where to start: the stage with most damage, and its main cause.
-    const focus = el("article", "result-card dc-focus");
+    // Where to start: the stage with the highest count, and its main cause.
+    const focus = el("article", "result-card dl-focus");
     focus.append(el("p", "result-label", "Start here"));
     const focusTitle = el("h3");
     focusTitle.append(result.topStage.key);
     if (result.topStageCause) focusTitle.append(el("span", null, ` · ${result.topStageCause.key}`));
     focus.append(focusTitle);
-    focus.append(el("p", "dc-focus-lede", problemText(result)));
+    focus.append(el("p", "dl-focus-lede", problemText(result)));
     const advice = data.stages[result.topStage.key];
     if (advice) {
       focus.append(el("p", null, advice.meaning));
@@ -450,7 +457,7 @@
       focus.append(el("blockquote", null, advice.question));
     }
     if (result.unknownShare > 0.15) {
-      focus.append(el("p", "dc-warning", `${pct(result.unknownShare, 0)} of damaged units have no known cause. ${data.causes.Unknown}`));
+      focus.append(el("p", "dl-warning", `${pct(result.unknownShare, 0)} of ${t.many} have no known cause. ${data.causes.Unknown}`));
     }
     results.append(focus);
 
@@ -490,7 +497,7 @@
     });
   });
 
-  // Log a damage.
+  // Log an entry.
   entry.elements.date.value = new Date().toISOString().slice(0, 10);
   entry.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -498,7 +505,7 @@
     const units = Math.round(parseNumber(form.units.value));
     if (!(units > 0)) {
       form.units.focus();
-      flash(entryStatus, "Enter at least one damaged unit.");
+      flash(entryStatus, `Enter at least one ${t.one}.`);
       return;
     }
     const cost = parseNumber(form.cost.value);
@@ -511,25 +518,25 @@
     });
     save();
     render();
-    // Keep date, shift and stage: the next damage is usually from the same place.
+    // Keep date, shift and stage: the next entry is usually from the same place.
     form.units.value = 1;
     form.cost.value = "";
     form.note.value = "";
-    flash(entryStatus, `Added ${plural(units, "unit")} at ${form.stage.value}.`);
+    flash(entryStatus, `Added ${plural(units, t.one, t.many)} at ${form.stage.value}.`);
     form.type.focus();
   });
 
   root.querySelector("[data-import]").addEventListener("click", () => {
     const { added, skipped } = importRows(pasteArea.value);
     if (!added.length) {
-      flash(importStatus, "No rows found. Check that units are in the sixth column.");
+      flash(importStatus, `No rows found. Check that ${t.countShort} are in the sixth column.`);
       return;
     }
     state.rows.push(...added);
     save();
     render();
     pasteArea.value = "";
-    flash(importStatus, `Imported ${plural(added.length, "row")}${skipped ? `, skipped ${skipped} without units` : ""}.`);
+    flash(importStatus, `Imported ${plural(added.length, "row")}${skipped ? `, skipped ${skipped} without ${t.countShort}` : ""}.`);
   });
 
   logBody.addEventListener("click", (event) => {
@@ -555,7 +562,7 @@
   });
 
   root.querySelector("[data-clear]").addEventListener("click", () => {
-    if (!state.rows.length || !window.confirm("Clear the whole damage log?")) return;
+    if (!state.rows.length || !window.confirm(`Clear the whole ${t.tool} log?`)) return;
     state.rows = [];
     save();
     render();
@@ -567,13 +574,13 @@
       const text = String(value ?? "");
       return /[",\n]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
     };
-    const header = ["Date", ...fields.map((f) => f.label), "Units", "Cost", "Note"];
+    const header = ["Date", ...fields.map((f) => f.label), capital(t.countShort), "Cost", "Note"];
     const lines = [header, ...state.rows.map((row) => [row.date, ...fields.map((f) => row[f.name]), row.units, row.cost ?? "", row.note])]
       .map((cells) => cells.map(quote).join(","));
     const blob = new Blob([`﻿${lines.join("\r\n")}\r\n`], { type: "text/csv;charset=utf-8" });
     const link = el("a");
     link.href = URL.createObjectURL(blob);
-    link.download = `damage-log-${new Date().toISOString().slice(0, 10)}.csv`;
+    link.download = `${t.csv}-${new Date().toISOString().slice(0, 10)}.csv`;
     document.body.append(link);
     link.click();
     link.remove();
@@ -586,7 +593,7 @@
     const total = checkboxes.length;
     const verdict = ticked === total ? "The standard holds today."
       : ticked >= total - 2 ? "Close. Fix the open lines this shift."
-      : ticked >= total / 2 ? "Gaps in the standard. Expect damage where lines are open."
+      : ticked >= total / 2 ? "Gaps in the standard. Expect misses where lines are open."
       : "Not yet a standard. Start with the first three lines.";
     checkScore.replaceChildren(el("strong", null, `${ticked} of ${total}`), ` in place. ${verdict}`);
   };

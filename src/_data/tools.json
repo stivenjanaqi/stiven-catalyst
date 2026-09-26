@@ -26,10 +26,10 @@
   {
     "name": "Incomplete Control",
     "type": "Warehouse",
-    "time": "Soon",
-    "summary": "Missing items, short picks and wrong items, traced to stock accuracy, picking, packing, scanning or the system. With a perfect order rate.",
-    "url": "",
-    "cta": ""
+    "time": "Ongoing",
+    "summary": "Log orders that left without every item or parcel. See the incomplete rate, DPMO and sigma level, the causes behind most misses, and where they start.",
+    "url": "/tools/incomplete-control/",
+    "cta": "Open the order log"
   },
   {
     "name": "Delay Analyzer",

@@ -1,10 +1,94 @@
 {
   "storageKey": "sc-damage-control",
+  "text": {
+    "tool": "Damage Control",
+    "one": "damaged unit",
+    "many": "damaged units",
+    "allNoun": "damage",
+    "volumeNoun": "units",
+    "volumeLabel": "Units handled",
+    "volumePlaceholder": "e.g. 18400",
+    "targetLabel": "Target damage %",
+    "targetPlaceholder": "e.g. 0.3",
+    "rateLabel": "Damage rate",
+    "periodPlaceholder": "e.g. Week 38, outbound",
+    "entryLegend": "Log a damage",
+    "countLabel": "Units damaged",
+    "countShort": "units",
+    "notePlaceholder": "e.g. Cage 4, top layer collapsed",
+    "pasteRow": "One row per damage",
+    "pastePlaceholder": "2026-09-14\tLate\tLoading\tCrushed\tStacking\t6\t55",
+    "empty": "No damage logged yet.",
+    "stageTitle": "Where it is found",
+    "stageNote": "In process order, from the dock door to the customer.",
+    "stagePhrase": "found at",
+    "matrixTitle": "Stage and damage type",
+    "csv": "damage-log",
+    "tips": [
+      [
+        "Log where it was found.",
+        "The stage is where the damage was seen, the cause is why it happened. Both matter."
+      ],
+      [
+        "Count units, not incidents.",
+        "Six crushed parcels from one collapsed wall are six units."
+      ],
+      [
+        "Add the volume.",
+        "Without units handled you see counts; with them you get a rate, DPMO and sigma level."
+      ]
+    ],
+    "checkTitle": "Does the standard hold?",
+    "checkIntro": "Walk the dock and tick what you actually see today, not what the SOP says. Every unticked line is a place where damage can start."
+  },
   "fields": [
-    { "name": "shift", "label": "Shift", "options": ["Early", "Late", "Night"] },
-    { "name": "stage", "label": "Stage", "options": ["Receiving", "Storage", "Picking", "Packing", "Loading", "Transport", "Handover"] },
-    { "name": "type", "label": "Damage type", "options": ["Crushed", "Torn or punctured", "Wet", "Broken", "Leaking", "Other"] },
-    { "name": "cause", "label": "Cause", "options": ["Stacking", "Handling", "Packaging", "Equipment", "Load securing", "Environment", "Unknown"] }
+    {
+      "name": "shift",
+      "label": "Shift",
+      "options": [
+        "Early",
+        "Late",
+        "Night"
+      ]
+    },
+    {
+      "name": "stage",
+      "label": "Stage",
+      "options": [
+        "Receiving",
+        "Storage",
+        "Picking",
+        "Packing",
+        "Loading",
+        "Transport",
+        "Handover"
+      ]
+    },
+    {
+      "name": "type",
+      "label": "Damage type",
+      "options": [
+        "Crushed",
+        "Torn or punctured",
+        "Wet",
+        "Broken",
+        "Leaking",
+        "Other"
+      ]
+    },
+    {
+      "name": "cause",
+      "label": "Cause",
+      "options": [
+        "Stacking",
+        "Handling",
+        "Packaging",
+        "Equipment",
+        "Load securing",
+        "Environment",
+        "Unknown"
+      ]
+    }
   ],
   "stages": {
     "Receiving": {
