@@ -40,6 +40,14 @@
     "cta": "Open the route log"
   },
   {
+    "name": "Sigma & Control Chart",
+    "type": "Six Sigma",
+    "time": "5 min",
+    "summary": "Turn defects into a sigma level, combine on time, undamaged and complete into perfect delivery, and see whether a bad day is a signal or noise.",
+    "url": "/tools/sigma-control-chart/",
+    "cta": "Open the calculator"
+  },
+  {
     "name": "Shift Handover",
     "type": "Checklist",
     "time": "Soon",

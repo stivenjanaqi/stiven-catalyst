@@ -179,7 +179,8 @@ window.ToolKit = (() => {
     printButton.type = "button";
     printButton.addEventListener("click", () => window.print());
     const whys = el("a", "button-secondary", "Take it to 5 Whys");
-    const url = new URL(document.querySelector('.tool-aside a[href*="five-whys"]').href);
+    // Every tool lives next to 5 Whys under /tools/.
+    const url = new URL("../five-whys/", window.location.href);
     url.searchParams.set("problem", problem);
     whys.href = url.href;
     actions.append(copyButton, printButton, whys);
