@@ -3,7 +3,7 @@
   const dataEl = document.getElementById("shift-handover-data");
   if (!form || !dataEl || !window.ToolKit) return;
 
-  const { read, write, el, today } = window.ToolKit;
+  const { read, write, isObject, str, el, today } = window.ToolKit;
   const data = JSON.parse(dataEl.textContent);
   const KEY = data.storageKey;
   const HISTORY_MAX = 30;
@@ -39,10 +39,29 @@
     ackAt: "",
   });
 
+  // Rebuild a saved handover field by field, so damaged data cannot break the page.
+  const clean = (h) => {
+    const key = data.templates[h.template] ? h.template : Object.keys(data.templates)[0];
+    const base = blank(key, str(h.date) || today(), data.shifts.includes(h.shift) ? h.shift : data.shifts[0]);
+    const metrics = Array.isArray(h.metrics) ? h.metrics.filter(Array.isArray).map((m) => [str(m[0]), str(m[1]), str(m[2])]) : base.metrics;
+    const issues = Array.isArray(h.issues) ? h.issues.filter(isObject).map((issue) => ({
+      text: str(issue.text),
+      priority: data.priorities.includes(issue.priority) ? issue.priority : "Medium",
+      owner: str(issue.owner),
+      due: str(issue.due),
+      done: issue.done === true,
+      carried: Number.isInteger(issue.carried) && issue.carried > 0 ? issue.carried : 0,
+    })) : [];
+    const checks = base.checks.map((_, i) => Array.isArray(h.checks) && h.checks[i] === true);
+    return { ...base, area: str(h.area), from: str(h.from), to: str(h.to), headsUp: str(h.headsUp), safety: str(h.safety), ackAt: str(h.ackAt), metrics, issues, checks };
+  };
   const saved = read(KEY, {});
   const state = {
-    current: saved.current || blank(Object.keys(data.templates)[0]),
-    history: Array.isArray(saved.history) ? saved.history : [],
+    current: isObject(saved) && isObject(saved.current) ? clean(saved.current) : blank(Object.keys(data.templates)[0]),
+    history: isObject(saved) && Array.isArray(saved.history)
+      ? saved.history.filter((entry) => isObject(entry) && isObject(entry.handover) && typeof entry.text === "string")
+        .map((entry) => ({ ...entry, handover: clean(entry.handover) }))
+      : [],
   };
   const save = () => write(KEY, state);
   const cur = () => state.current;

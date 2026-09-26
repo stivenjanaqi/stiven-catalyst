@@ -2,10 +2,10 @@
   const dataEl = document.getElementById("dmaic-data");
   if (!dataEl || !window.ToolKit) return;
 
-  const { read, write } = window.ToolKit;
+  const { write, loadState } = window.ToolKit;
   const data = JSON.parse(dataEl.textContent);
   const KEY = data.storageKey;
-  const state = { answers: {}, checks: {}, charter: {}, ...read(KEY, {}) };
+  const state = loadState(KEY, { answers: {}, checks: {}, charter: {} });
   const save = () => write(KEY, state);
   const total = data.modules.reduce((sum, m) => sum + m.quiz.length, 0);
 
@@ -98,7 +98,7 @@
     save();
   };
   fields.forEach((f) => {
-    f.input.value = state.charter[f.name] || "";
+    f.input.value = typeof state.charter[f.name] === "string" ? state.charter[f.name] : "";
     f.input.addEventListener("input", saveCharter);
   });
   const note = (message) => {
