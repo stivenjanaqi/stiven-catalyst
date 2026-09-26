@@ -48,6 +48,14 @@
     "cta": "Open the calculator"
   },
   {
+    "name": "Six Sigma in the Warehouse",
+    "type": "Course",
+    "time": "45 min",
+    "summary": "DMAIC in five steps on one warehouse case, with the tool to use at each step, three questions per step, the eight wastes and a project charter.",
+    "url": "/tools/six-sigma-dmaic/",
+    "cta": "Start the course"
+  },
+  {
     "name": "Shift Handover",
     "type": "Checklist",
     "time": "Soon",
