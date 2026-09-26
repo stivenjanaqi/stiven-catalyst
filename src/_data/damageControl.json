@@ -1,0 +1,132 @@
+{
+  "storageKey": "sc-damage-control",
+  "fields": [
+    { "name": "shift", "label": "Shift", "options": ["Early", "Late", "Night"] },
+    { "name": "stage", "label": "Stage", "options": ["Receiving", "Storage", "Picking", "Packing", "Loading", "Transport", "Handover"] },
+    { "name": "type", "label": "Damage type", "options": ["Crushed", "Torn or punctured", "Wet", "Broken", "Leaking", "Other"] },
+    { "name": "cause", "label": "Cause", "options": ["Stacking", "Handling", "Packaging", "Equipment", "Load securing", "Environment", "Unknown"] }
+  ],
+  "stages": {
+    "Receiving": {
+      "meaning": "Much of what is found at receiving arrived damaged. If it is not recorded at the door, your site pays for someone else's damage.",
+      "moves": [
+        "Inspect and photograph damaged pallets before signing, and note it on the delivery note.",
+        "Keep \"arrived damaged\" separate from \"damaged here\" in the log.",
+        "Share the numbers with the supplier or carrier every week, with photos."
+      ],
+      "question": "Who checks the goods before the delivery note is signed?"
+    },
+    "Storage": {
+      "meaning": "Damage while goods sit still points to racking, height, water or traffic around the location.",
+      "moves": [
+        "Store heavy items low and check that nothing overhangs the beam or shelf edge.",
+        "Look where damage clusters: aisle ends, corners and forklift turns usually need protection.",
+        "Walk the building for water: roof leaks, condensation, doors left open in rain."
+      ],
+      "question": "Which locations keep producing damage, and what passes by them?"
+    },
+    "Picking": {
+      "meaning": "Items are dropped, pulled from under other items or thrown into totes when picking is rushed or the location is awkward.",
+      "moves": [
+        "Watch ten picks at the worst location and note how the item is taken out.",
+        "Move heavy and fragile items to waist height where they are picked often.",
+        "Heavy first, fragile last: set the pick order so nothing heavy lands on top."
+      ],
+      "question": "What does a picker have to do to take this item out safely?"
+    },
+    "Packing": {
+      "meaning": "Wrong box size, too little void fill or weak tape. The parcel leaves looking fine and fails on the way.",
+      "moves": [
+        "Agree a box size per item group and keep those boxes at the station.",
+        "Shake test: if the item moves inside the box, add fill before closing it.",
+        "Flag fragile items in the system so the packer sees it before packing."
+      ],
+      "question": "What does the packer do when the right box is not at the station?"
+    },
+    "Loading": {
+      "meaning": "Most transport damage is created at the moment the vehicle is loaded: stacking order, gaps, speed at peak time.",
+      "moves": [
+        "Heavy at the bottom, light on top, fragile never under anything.",
+        "Build stable walls with no gaps or overhang, and secure the last wall before the doors close.",
+        "Check peak loading slots: when the loading-time target wins over the stacking standard, damage follows."
+      ],
+      "question": "What does the load look like in the last ten minutes before departure?"
+    },
+    "Transport": {
+      "meaning": "The load moves in the vehicle: braking, turns, missing load securing, shelving that does not hold.",
+      "moves": [
+        "Check load securing before departure and take one photo of the closed load.",
+        "Compare damage by route, vehicle and driver before blaming the road.",
+        "Repair shelving, straps and securing points in the vehicles that show up most."
+      ],
+      "question": "Does the load look the same at the first stop as it did at departure?"
+    },
+    "Handover": {
+      "meaning": "Damage in the last metres: parcels thrown, left in the rain or put down in unsafe places.",
+      "moves": [
+        "Carry, never throw: two hands for the last metres.",
+        "Protect parcels from rain at the door with a bag or a cover.",
+        "Take a photo at handover so damage claims can be checked fairly."
+      ],
+      "question": "What happens to a parcel between the vehicle door and the customer?"
+    }
+  },
+  "causes": {
+    "Stacking": "Write the stacking rule as one picture at the dock: heavy low, fragile high, no gaps.",
+    "Handling": "Watch the work at the busiest hour. Handling damage grows when people are rushed, not when they are careless.",
+    "Packaging": "Test the packaging, not the people: drop and shake one parcel of each type that shows up here.",
+    "Equipment": "Check forks, pallet trucks, cages and roll containers. Take broken equipment out of use the same day.",
+    "Load securing": "Make securing the last step of loading, with a photo, not something the driver has to remember.",
+    "Environment": "Water, heat and cold damage goods silently. Close the gaps: doors, roofs, covers, waiting areas.",
+    "Unknown": "A large Unknown share means the log is not yet good enough. Record stage and cause at the moment damage is found."
+  },
+  "checklist": [
+    "Heavy items go at the bottom, light and fragile items on top.",
+    "Nothing overhangs the pallet, shelf or cage edge.",
+    "Walls are stable, with no gaps a parcel can fall into.",
+    "The load is secured with straps, bars or nets before the doors close.",
+    "Fragile items and liquids are marked and travel upright.",
+    "Damaged boxes are taken out and repacked, never loaded as they are.",
+    "Forks, pallet trucks and cages are checked before use.",
+    "Leaks, wet floors and open doors near goods are reported the same shift.",
+    "Every damage is logged with stage and cause at the moment it is found.",
+    "Goods that arrive damaged are photographed and noted before signing."
+  ],
+  "example": {
+    "period": "Example week",
+    "volume": 18400,
+    "target": 0.3,
+    "rows": [
+      "2026-09-14|Early|Loading|Crushed|Stacking|7|61",
+      "2026-09-14|Early|Receiving|Crushed|Packaging|2|",
+      "2026-09-14|Late|Loading|Crushed|Stacking|6|55",
+      "2026-09-14|Late|Transport|Broken|Load securing|3|72",
+      "2026-09-14|Night|Picking|Torn or punctured|Handling|2|18",
+      "2026-09-15|Early|Loading|Torn or punctured|Handling|3|24",
+      "2026-09-15|Late|Loading|Crushed|Stacking|7|61",
+      "2026-09-15|Late|Packing|Broken|Packaging|2|40",
+      "2026-09-15|Late|Handover|Wet|Environment|3|30",
+      "2026-09-15|Night|Storage|Crushed|Equipment|1|12",
+      "2026-09-16|Early|Transport|Broken|Load securing|4|95",
+      "2026-09-16|Early|Loading|Crushed|Stacking|5|44",
+      "2026-09-16|Late|Picking|Broken|Handling|2|26",
+      "2026-09-16|Late|Loading|Crushed|Stacking|8|70",
+      "2026-09-16|Night|Receiving|Wet|Environment|1|",
+      "2026-09-17|Early|Loading|Crushed|Stacking|3|27",
+      "2026-09-17|Late|Transport|Leaking|Load securing|4|58",
+      "2026-09-17|Late|Loading|Torn or punctured|Equipment|2|16",
+      "2026-09-17|Late|Packing|Crushed|Packaging|3|29",
+      "2026-09-17|Night|Storage|Wet|Environment|2|22",
+      "2026-09-18|Early|Handover|Torn or punctured|Handling|2|15",
+      "2026-09-18|Late|Loading|Crushed|Stacking|13|118",
+      "2026-09-18|Late|Transport|Broken|Load securing|4|81",
+      "2026-09-18|Late|Loading|Crushed|Unknown|2|19",
+      "2026-09-18|Night|Picking|Crushed|Equipment|1|9",
+      "2026-09-19|Early|Loading|Crushed|Stacking|4|35",
+      "2026-09-19|Early|Transport|Crushed|Stacking|2|24",
+      "2026-09-19|Late|Handover|Wet|Environment|1|12",
+      "2026-09-19|Late|Loading|Broken|Handling|2|48",
+      "2026-09-20|Early|Loading|Crushed|Stacking|3|26"
+    ]
+  }
+}
