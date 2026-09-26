@@ -34,10 +34,10 @@
   {
     "name": "Delay Analyzer",
     "type": "Warehouse",
-    "time": "Soon",
-    "summary": "Separate a late start at the dock from delay on the road, so the right team owns the fix. On-time rate, delay by reason, hour and shift.",
-    "url": "",
-    "cta": ""
+    "time": "Ongoing",
+    "summary": "Log planned and actual route times. See the on-time rate, how much delay starts at the dock and how much on the road, and the reasons and hours behind it.",
+    "url": "/tools/delay-analyzer/",
+    "cta": "Open the route log"
   },
   {
     "name": "Shift Handover",

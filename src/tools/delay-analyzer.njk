@@ -1,0 +1,182 @@
+---
+layout: layouts/base.njk
+title: Delay Analyzer
+description: "A private route log for delivery and dispatch teams: on-time rate, where delay starts (at the dock or on the road), late reasons, departure hours and shifts."
+activeNav: /tools.html
+permalink: /tools/delay-analyzer/
+---
+<section class="shell page-hero tool-hero">
+  <p class="eyebrow">Free tool · Warehouse</p>
+  <h1>Delay Analyzer</h1>
+  <p class="lede">A late delivery is often decided before the vehicle leaves. Log each route's planned and actual times. The tool splits every late minute into dock and road, so the right team owns the fix.</p>
+</section>
+
+<section class="shell tool-layout dl-setup">
+  <div class="tool-panel" data-delay-analyzer>
+    <fieldset class="dl-box">
+      <legend class="kicker">1 · Period</legend>
+      <div class="dl-grid">
+        <div class="field dl-wide">
+          <label for="da-period">Period <span class="optional">optional</span></label>
+          <input id="da-period" name="period" placeholder="e.g. Week 38, last mile" autocomplete="off" data-setting>
+        </div>
+        <div class="field">
+          <label for="da-dep-grace">Late departure after (min)</label>
+          <input id="da-dep-grace" name="departureGrace" type="number" min="0" step="1" inputmode="numeric" placeholder="e.g. 10" data-setting>
+        </div>
+        <div class="field">
+          <label for="da-arr-grace">Late arrival after (min)</label>
+          <input id="da-arr-grace" name="arrivalGrace" type="number" min="0" step="1" inputmode="numeric" placeholder="e.g. 15" data-setting>
+        </div>
+        <div class="field">
+          <label for="da-target">Target on-time % <span class="optional">optional</span></label>
+          <input id="da-target" name="target" type="number" min="0" max="100" step="0.1" inputmode="decimal" placeholder="e.g. 95" data-setting>
+        </div>
+        <div class="field dl-wide">
+          <label for="da-routes">Routes in the period <span class="optional">only if you log late routes only</span></label>
+          <input id="da-routes" name="routes" type="number" min="0" step="1" inputmode="numeric" placeholder="Empty if every route is logged" data-setting>
+        </div>
+      </div>
+    </fieldset>
+
+    <form class="dl-box" data-entry>
+      <fieldset>
+        <legend class="kicker">2 · Log a route</legend>
+        <div class="dl-grid">
+          <div class="field">
+            <label for="da-date">Date</label>
+            <input id="da-date" name="date" type="date" required>
+          </div>
+          <div class="field">
+            <label for="da-shift">Shift</label>
+            <select id="da-shift" name="shift">
+              {%- for shift in delayAnalyzer.shifts %}
+              <option>{{ shift }}</option>
+              {%- endfor %}
+            </select>
+          </div>
+          <div class="field">
+            <label for="da-route">Route <span class="optional">optional</span></label>
+            <input id="da-route" name="route" placeholder="e.g. R07" autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="da-plan-dep">Planned departure</label>
+            <input id="da-plan-dep" name="planDep" type="time" required>
+          </div>
+          <div class="field">
+            <label for="da-act-dep">Actual departure</label>
+            <input id="da-act-dep" name="actDep" type="time" required>
+          </div>
+          <div class="field">
+            <label for="da-reason">Reason if late</label>
+            <select id="da-reason" name="reason">
+              <option value="">On time / not known</option>
+              <optgroup label="At the dock">
+                {%- for r in delayAnalyzer.reasons %}{% if r.side == "dock" %}
+                <option>{{ r.name }}</option>
+                {%- endif %}{% endfor %}
+              </optgroup>
+              <optgroup label="On the road">
+                {%- for r in delayAnalyzer.reasons %}{% if r.side == "road" %}
+                <option>{{ r.name }}</option>
+                {%- endif %}{% endfor %}
+              </optgroup>
+            </select>
+          </div>
+          <div class="field">
+            <label for="da-plan-arr">Planned arrival</label>
+            <input id="da-plan-arr" name="planArr" type="time" required>
+          </div>
+          <div class="field">
+            <label for="da-act-arr">Actual arrival</label>
+            <input id="da-act-arr" name="actArr" type="time" required>
+          </div>
+          <div class="field">
+            <label for="da-note">Note <span class="optional">optional</span></label>
+            <input id="da-note" name="note" placeholder="e.g. Waited for wave 3" autocomplete="off">
+          </div>
+        </div>
+        <div class="tool-actions">
+          <button class="button-primary" type="submit">Add to log</button>
+          <p class="form-note" data-entry-status aria-live="polite"></p>
+        </div>
+      </fieldset>
+    </form>
+
+    <details class="dl-box dl-paste">
+      <summary class="kicker">Or paste from Excel</summary>
+      <p class="form-note">One row per route, columns in this order: <strong>date, shift, route, planned departure, actual departure, planned arrival, actual arrival, reason, note</strong>. Times like 07:45, 7.45 or 0745 all work; tabs, semicolons or commas too, and a header row is skipped. Your own reason names are kept as they are.</p>
+      <div class="field">
+        <label class="visually-hidden" for="da-paste">Rows to import</label>
+        <textarea id="da-paste" rows="5" placeholder="2026-09-14	Late	R12	11:15	11:50	15:15	15:55	Late wave"></textarea>
+      </div>
+      <div class="tool-actions">
+        <button class="button-secondary" type="button" data-import>Import rows</button>
+        <p class="form-note" data-import-status aria-live="polite"></p>
+      </div>
+    </details>
+
+    <div class="dl-box">
+      <div class="dl-log-head">
+        <p class="kicker">3 · Log</p>
+        <p class="form-note" data-log-count></p>
+      </div>
+      <div class="dl-table-wrap" data-log-wrap hidden>
+        <table class="dl-table">
+          <thead>
+            <tr><th scope="col">Date</th><th scope="col">Shift</th><th scope="col">Route</th><th scope="col">Dep. plan</th><th scope="col">Dep.</th><th scope="col">Arr. plan</th><th scope="col">Arr.</th><th scope="col" class="num">Dep. ±</th><th scope="col" class="num">Arr. ±</th><th scope="col">Reason</th><th scope="col">Note</th><th scope="col"><span class="visually-hidden">Remove</span></th></tr>
+          </thead>
+          <tbody data-log></tbody>
+        </table>
+      </div>
+      <p class="dl-empty" data-log-empty>No routes logged yet. Add the first one above, paste from Excel, or <button class="button-ghost" type="button" data-example>load an example week</button>.</p>
+      <div class="tool-actions">
+        <button class="button-secondary" type="button" data-csv>Download CSV</button>
+        <button class="button-secondary" type="button" data-clear>Clear log</button>
+      </div>
+    </div>
+  </div>
+
+  <aside class="tool-aside">
+    <p class="kicker">How to use it</p>
+    <ul class="tips">
+      <li><strong>Log every route.</strong> On-time routes are the baseline: without them there is no on-time rate and no pattern by hour.</li>
+      <li><strong>Use the promised time.</strong> Planned arrival is what was promised: the first stop, a delivery window or the route end. Use the same one every day.</li>
+      <li><strong>Dock or road.</strong> Minutes a route left late count as dock delay; minutes it lost after leaving count as road delay.</li>
+      <li><strong>Fix the vital few.</strong> Two or three reasons usually carry most late routes. Start there, then take the top one through <a class="inline-link" href="/tools/five-whys/">5 Whys</a>.</li>
+    </ul>
+    <p class="privacy-note">Your log stays in this browser. Nothing is sent or uploaded, and you can clear it at any time.</p>
+  </aside>
+</section>
+
+<section class="shell dl-results" data-results tabindex="-1" hidden></section>
+
+<section class="shell dl-check" data-floor-check>
+  <div class="section-heading">
+    <div>
+      <p class="kicker">Floor check</p>
+      <h2>Does the vehicle leave on time?</h2>
+    </div>
+    <p>Stand at the dock for one departure wave and tick what you actually see today. Every unticked line is a place where the first minutes of delay are made.</p>
+  </div>
+  <ol class="dl-checklist">
+    {%- for item in delayAnalyzer.checklist %}
+    <li>
+      <label class="dl-check-item">
+        <input type="checkbox" name="check{{ loop.index0 }}">
+        <span>{{ item }}</span>
+      </label>
+    </li>
+    {%- endfor %}
+  </ol>
+  <div class="dl-check-foot">
+    <p class="dl-score" data-check-score aria-live="polite"></p>
+    <div class="tool-actions">
+      <button class="button-secondary" type="button" data-check-reset>Reset the check</button>
+    </div>
+  </div>
+</section>
+
+<script type="application/json" id="delay-analyzer-data">{{ delayAnalyzer | dump | safe }}</script>
+<script src="/js/tool-kit.js" defer></script>
+<script src="/js/delay-analyzer.js" defer></script>

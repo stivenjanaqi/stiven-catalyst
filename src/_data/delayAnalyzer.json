@@ -1,0 +1,218 @@
+{
+  "storageKey": "sc-delay-analyzer",
+  "shifts": [
+    "Early",
+    "Late",
+    "Night"
+  ],
+  "reasons": [
+    {
+      "name": "Late loading",
+      "side": "dock",
+      "meaning": "The vehicle was ready, the load was not. Loading started late, ran slow or waited for missing parcels.",
+      "moves": [
+        "Give every route a fixed loading start time and a loading slot at a named dock.",
+        "Stage the load by route before the vehicle arrives, so loading is carrying, not searching.",
+        "Time loading for one week: find the routes that always take longer and why."
+      ],
+      "question": "What is the vehicle waiting for in the last fifteen minutes before it leaves?"
+    },
+    {
+      "name": "Late wave or volume peak",
+      "side": "dock",
+      "meaning": "Volume arrived after the cut-off, or a peak landed on the same departure slots every day. The routes wait for the last parcels.",
+      "moves": [
+        "Agree a hard cut-off: parcels that miss it go on the next route, not into a late departure.",
+        "Move the heaviest routes away from the peak wave where the delivery windows allow it.",
+        "Share late-wave numbers with the upstream site or sorter every day, with the departures they cost."
+      ],
+      "question": "Who decides to hold a route for late volume, and what does it cost the first customers?"
+    },
+    {
+      "name": "Vehicle not ready",
+      "side": "dock",
+      "meaning": "The vehicle arrived late at the dock, failed a check or was not fuelled or charged.",
+      "moves": [
+        "Check, fuel or charge vehicles at the end of the previous shift, not at departure.",
+        "Keep one spare vehicle ready at peak, with keys and paperwork.",
+        "Log vehicle problems by plate: a few vehicles usually cause most of it."
+      ],
+      "question": "When do we find out a vehicle is not ready, and could we know an hour earlier?"
+    },
+    {
+      "name": "Driver not ready",
+      "side": "dock",
+      "meaning": "The driver arrived late, the briefing ran long or the route was reassigned at the last minute.",
+      "moves": [
+        "Start the briefing on time and keep it short; hand route notes over in writing.",
+        "Confirm drivers for early routes the evening before.",
+        "Keep reassignments before loading starts, never at the vehicle."
+      ],
+      "question": "How many minutes pass between the driver arriving and the vehicle leaving, and where do they go?"
+    },
+    {
+      "name": "Missing paperwork or scanner",
+      "side": "dock",
+      "meaning": "Scanners, keys, delivery notes or customs papers were not ready when the vehicle was.",
+      "moves": [
+        "Prepare scanners, keys and papers per route in one place before loading ends.",
+        "Charge and test scanners at the end of each shift.",
+        "Add papers and devices to the departure check, not to the driver's memory."
+      ],
+      "question": "What does a driver have to go and find before leaving?"
+    },
+    {
+      "name": "Traffic or roadworks",
+      "side": "road",
+      "meaning": "The route lost time to traffic, closures or roadworks. Some of it is outside your control; recurring patterns are not.",
+      "moves": [
+        "Look for the same roads and hours in the log: recurring traffic belongs in the route plan.",
+        "Shift departures or stop order to miss known peaks.",
+        "Check whether the planned time includes realistic driving time for that hour."
+      ],
+      "question": "Is this traffic a surprise, or does it happen at this hour every week?"
+    },
+    {
+      "name": "Address or access",
+      "side": "road",
+      "meaning": "Wrong addresses, closed gates, no parking or unclear delivery points cost minutes at each stop.",
+      "moves": [
+        "Collect access notes (gates, codes, loading zones) and put them in the route data.",
+        "Fix wrong addresses at the source, not by memory of one driver.",
+        "Give new drivers the notes for difficult stops before they leave."
+      ],
+      "question": "Which stops cost more than ten minutes every time, and does the next driver know?"
+    },
+    {
+      "name": "Customer not available",
+      "side": "road",
+      "meaning": "The customer was not there, so the driver waited, called or came back.",
+      "moves": [
+        "Send a delivery window to the customer and confirm it before the route leaves.",
+        "Agree a fixed waiting time and a clear next step for each type of customer.",
+        "Look for repeat customers: a standing delivery arrangement saves the same minutes every week."
+      ],
+      "question": "How long does a driver wait before moving on, and who decided that?"
+    },
+    {
+      "name": "Too many stops",
+      "side": "road",
+      "meaning": "The route was planned with more stops or distance than the time allows. The driver cannot win it back.",
+      "moves": [
+        "Compare planned and actual stop times per route: plan with what really happens.",
+        "Cap stops per route by area and time of day, not by average.",
+        "Move stops from the longest routes before the vehicle is loaded."
+      ],
+      "question": "Could our best driver finish this route on time on a normal day?"
+    },
+    {
+      "name": "Weather",
+      "side": "road",
+      "meaning": "Snow, storms or heat slowed driving and stops.",
+      "moves": [
+        "Plan weather days: fewer stops per route and earlier departures when a warning is out.",
+        "Tell customers early when windows will move.",
+        "Keep weather out of the other reasons, so the normal pattern stays visible."
+      ],
+      "question": "What do we change in the plan the evening before bad weather?"
+    }
+  ],
+  "sides": {
+    "dock": {
+      "name": "Dock",
+      "lede": "started at the dock, before the vehicle left",
+      "advice": "Fix the departure first. A vehicle that leaves 30 minutes late cannot be on time for its first stops, whatever the driver does on the road."
+    },
+    "road": {
+      "name": "Road",
+      "lede": "were built on the road, after an on-time departure",
+      "advice": "The dock hands over on time; the delay grows on the road. Look at route design, stop count and delivery windows before you look at driving."
+    }
+  },
+  "checklist": [
+    "Loading starts at a fixed time for every route, not when the last parcel arrives.",
+    "The cut-off holds: late volume goes to the next route, not into a late departure.",
+    "Vehicles are checked, fuelled or charged and at the dock before loading starts.",
+    "Drivers are briefed and ready before their vehicle is loaded.",
+    "Routes with the earliest delivery windows load and leave first.",
+    "Scanners, keys and paperwork are ready per route before loading ends.",
+    "Departure times are recorded for every route, not only the late ones.",
+    "Routes are planned with a realistic number of stops for the time available.",
+    "Known access problems (gates, codes, loading zones) are in the route notes.",
+    "Every late route has a reason recorded the same day."
+  ],
+  "example": {
+    "period": "Example week",
+    "routes": "",
+    "departureGrace": "10",
+    "arrivalGrace": "15",
+    "target": "95",
+    "rows": [
+      "2026-09-14|Early|R01|06:30|06:30|10:30|10:20|",
+      "2026-09-14|Early|R02|06:45|06:47|11:00|11:07|",
+      "2026-09-14|Early|R03|07:00|06:57|10:45|10:37|",
+      "2026-09-14|Early|R04|07:15|07:20|11:45|11:50|",
+      "2026-09-14|Early|R05|07:30|07:30|11:30|11:30|",
+      "2026-09-14|Early|R06|07:45|07:40|12:00|11:50|",
+      "2026-09-14|Early|R07|08:00|08:03|12:00|12:03|",
+      "2026-09-14|Late|R08|10:30|10:30|14:15|14:05|",
+      "2026-09-14|Late|R09|10:45|10:49|14:45|14:54|",
+      "2026-09-14|Late|R10|11:00|10:58|15:15|15:13|",
+      "2026-09-14|Late|R11|11:15|11:15|15:15|15:00|",
+      "2026-09-14|Late|R12|11:30|12:05|15:15|15:55|Late wave or volume peak",
+      "2026-09-14|Late|R13|11:45|12:30|15:45|16:40|Late wave or volume peak",
+      "2026-09-15|Early|R01|06:30|06:32|10:30|10:32|",
+      "2026-09-15|Early|R02|06:45|06:42|11:00|10:42|",
+      "2026-09-15|Early|R03|07:00|07:00|10:45|11:25|Traffic or roadworks",
+      "2026-09-15|Early|R04|07:15|07:15|11:45|11:40|",
+      "2026-09-15|Early|R05|07:30|07:25|11:30|11:15|",
+      "2026-09-15|Early|R06|07:45|07:48|12:00|12:08|",
+      "2026-09-15|Early|R07|08:00|08:00|12:00|11:55|",
+      "2026-09-15|Late|R08|10:30|10:34|14:15|14:19|",
+      "2026-09-15|Late|R09|10:45|10:43|14:45|14:43|",
+      "2026-09-15|Late|R10|11:00|11:00|15:15|15:10|",
+      "2026-09-15|Late|R11|11:15|11:21|15:15|15:21|",
+      "2026-09-15|Late|R12|11:30|12:00|15:15|15:45|Late loading",
+      "2026-09-15|Late|R13|11:45|12:25|15:45|16:30|Late loading",
+      "2026-09-16|Early|R01|06:30|06:27|10:30|10:22|",
+      "2026-09-16|Early|R02|06:45|06:50|11:00|11:05|",
+      "2026-09-16|Early|R03|07:00|07:00|10:45|10:35|",
+      "2026-09-16|Early|R04|07:15|07:10|11:45|11:45|",
+      "2026-09-16|Early|R05|07:30|07:35|11:30|12:10|Too many stops",
+      "2026-09-16|Early|R06|07:45|08:10|12:00|12:30|Late loading",
+      "2026-09-16|Early|R07|08:00|08:04|12:00|12:14|",
+      "2026-09-16|Late|R08|10:30|10:28|14:15|14:08|",
+      "2026-09-16|Late|R09|10:45|10:45|14:45|14:35|",
+      "2026-09-16|Late|R10|11:00|11:06|15:15|15:26|",
+      "2026-09-16|Late|R11|11:15|11:16|15:15|15:11|",
+      "2026-09-16|Late|R12|11:30|11:30|15:15|15:15|",
+      "2026-09-16|Late|R13|11:45|11:47|15:45|15:47|",
+      "2026-09-17|Early|R01|06:30|06:35|10:30|10:40|",
+      "2026-09-17|Early|R02|06:45|06:45|11:00|10:55|",
+      "2026-09-17|Early|R03|07:00|06:55|10:45|10:40|",
+      "2026-09-17|Early|R04|07:15|07:18|11:45|11:48|",
+      "2026-09-17|Early|R05|07:30|07:30|11:30|11:25|",
+      "2026-09-17|Early|R06|07:45|07:49|12:00|12:04|",
+      "2026-09-17|Early|R07|08:00|07:58|12:00|11:48|",
+      "2026-09-17|Late|R08|10:30|10:30|14:15|14:20|",
+      "2026-09-17|Late|R09|10:45|10:51|14:45|14:51|",
+      "2026-09-17|Late|R10|11:00|11:15|15:15|15:55|Late wave or volume peak",
+      "2026-09-17|Late|R11|11:15|11:15|15:15|15:25|",
+      "2026-09-17|Late|R12|11:30|12:10|15:15|16:00|Late wave or volume peak",
+      "2026-09-17|Late|R13|11:45|12:35|15:45|16:35|Late wave or volume peak",
+      "2026-09-18|Early|R01|06:30|06:30|10:30|10:15|",
+      "2026-09-18|Early|R02|06:45|06:40|11:00|11:05|",
+      "2026-09-18|Early|R03|07:00|07:03|10:45|10:43|",
+      "2026-09-18|Early|R04|07:15|07:15|11:45|11:35|",
+      "2026-09-18|Early|R05|07:30|07:34|11:30|11:39|",
+      "2026-09-18|Early|R06|07:45|07:43|12:00|11:53|",
+      "2026-09-18|Early|R07|08:00|08:00|12:00|12:30|Traffic or roadworks",
+      "2026-09-18|Late|R08|10:30|10:36|14:15|14:21|",
+      "2026-09-18|Late|R09|10:45|10:46|14:45|14:41|",
+      "2026-09-18|Late|R10|11:00|11:00|15:15|15:15|",
+      "2026-09-18|Late|R11|11:15|11:17|15:15|15:07|",
+      "2026-09-18|Late|R12|11:30|12:00|15:15|15:55|Late loading",
+      "2026-09-18|Late|R13|11:45|12:20|15:45|16:15|"
+    ]
+  }
+}
