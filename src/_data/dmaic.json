@@ -1,0 +1,704 @@
+{
+  "storageKey": "sc-dmaic",
+  "case": {
+    "title": "The case: outbound damage at a parcel hub",
+    "text": "A hub ships about 18,400 units a week. Customers complain about crushed parcels, and the damage rate is almost twice what was promised. Follow one improvement project through all five steps, with the same numbers you can load as examples in the tools."
+  },
+  "modules": [
+    {
+      "id": "define",
+      "letter": "D",
+      "name": "Define",
+      "goal": "Agree what problem you are solving, for whom, how you will measure it and what is out of scope.",
+      "output": "A project charter",
+      "ideas": [
+        [
+          "Voice of the customer → CTQ",
+          "Start from what the customer notices, then turn it into something you can measure: the Critical to Quality requirement."
+        ],
+        [
+          "SIPOC",
+          "One line of boxes: Suppliers, Inputs, Process (five to seven steps), Outputs, Customers. It sets the borders of the project before anyone argues about details."
+        ],
+        [
+          "Problem statement",
+          "What, where, since when, how much, and the gap to the target. No cause and no solution yet: those come later, from data."
+        ]
+      ],
+      "case": [
+        [
+          "Problem",
+          "In weeks 36 to 38, 0.57% of outbound units left the hub damaged (104 of 18,400 in week 38) against 0.30% promised to the customer. Credits cost about €1,150 a week."
+        ],
+        [
+          "CTQ",
+          "The parcel arrives undamaged: no crushed, torn or wet outer carton."
+        ],
+        [
+          "Scope",
+          "In: from the pick face to handover to the driver. Out: linehaul and supplier packaging."
+        ],
+        [
+          "Target",
+          "0.30% or lower by week 46, without longer loading times."
+        ]
+      ],
+      "mistakes": [
+        "Writing the solution into the problem: \"we need more training\".",
+        "A scope so wide that the project never ends.",
+        "A problem without a number, so nobody can say when it is solved."
+      ],
+      "tools": [
+        [
+          "KPI Diagnostic",
+          "/tools/kpi-diagnostic/",
+          "to check whether the number is clear to everyone"
+        ],
+        [
+          "Project charter",
+          "#dm-charter",
+          "at the bottom of this page"
+        ]
+      ],
+      "checklist": [
+        "The problem has a number, a time frame and a gap to the target.",
+        "The CTQ is written from the customer's side.",
+        "Scope in and out is agreed.",
+        "A sponsor has signed up to the charter."
+      ],
+      "quiz": [
+        {
+          "q": "Which is the best problem statement?",
+          "options": [
+            "Loaders are careless and need more training.",
+            "Damage is too high on the outbound dock.",
+            "In weeks 36–38, 0.57% of outbound units were damaged against a 0.30% target, costing about €1,150 a week.",
+            "We need a new stacking standard."
+          ],
+          "answer": 2,
+          "why": "It says what, when, how much and the gap, and it does not guess the cause or the solution."
+        },
+        {
+          "q": "What does CTQ stand for?",
+          "options": [
+            "Cost to quality",
+            "Critical to quality",
+            "Control the queue",
+            "Check the quantity"
+          ],
+          "answer": 1,
+          "why": "A CTQ turns what the customer cares about into a requirement you can measure."
+        },
+        {
+          "q": "What is a SIPOC for?",
+          "options": [
+            "Drawing the process at a high level, with its suppliers and customers",
+            "Calculating the sigma level",
+            "Finding the root cause",
+            "Setting control limits"
+          ],
+          "answer": 0,
+          "why": "SIPOC sets the borders of the process before the project starts measuring."
+        }
+      ]
+    },
+    {
+      "id": "measure",
+      "letter": "M",
+      "name": "Measure",
+      "goal": "Find out how the process performs today, with data you can trust, before you change anything.",
+      "output": "A baseline",
+      "ideas": [
+        [
+          "Operational definition",
+          "Write exactly what counts, with photos. \"Damaged\" means different things to different people until it is written down."
+        ],
+        [
+          "Data collection plan",
+          "What is recorded, where, by whom, how often and in which format. Record the stage and cause at the moment a problem is found."
+        ],
+        [
+          "Check the measurement",
+          "Let two people judge the same twenty cases. If they disagree, fix the definition before you trust the data."
+        ],
+        [
+          "Baseline",
+          "The current level as a rate, DPMO and sigma level, over two to four weeks."
+        ]
+      ],
+      "case": [
+        [
+          "Definition",
+          "A unit is damaged when the outer carton is crushed, torn or wet enough for the customer to notice, found anywhere from the pick face to driver handover."
+        ],
+        [
+          "Check",
+          "Two shift leads judged the same 20 cartons and agreed on 17. Three were \"slightly dented\": the definition got a photo of what counts and what does not."
+        ],
+        [
+          "Baseline",
+          "104 damaged of 18,400 units: 0.57%, DPMO 5,652, sigma level 4.03."
+        ]
+      ],
+      "mistakes": [
+        "Changing the process while you are still measuring it.",
+        "Trusting a number that two people would count differently.",
+        "Measuring only at the end of the line, so you never see where it starts."
+      ],
+      "tools": [
+        [
+          "Damage Control",
+          "/tools/damage-control/",
+          "to log by stage and cause"
+        ],
+        [
+          "Sigma calculator",
+          "/tools/sigma-control-chart/",
+          "for DPMO and sigma level"
+        ]
+      ],
+      "checklist": [
+        "The definition is written, with photos of what counts.",
+        "Everyone logs the same way, with stage and cause.",
+        "There are at least two weeks of data.",
+        "The baseline is written as a rate, DPMO and sigma level."
+      ],
+      "quiz": [
+        {
+          "q": "Why write an operational definition?",
+          "options": [
+            "So that different people count the same thing the same way",
+            "Because the auditor asks for it",
+            "To make the number look better",
+            "To shorten the project"
+          ],
+          "answer": 0,
+          "why": "Without one, a change in the number can simply mean a change in who is counting."
+        },
+        {
+          "q": "104 damaged units out of 18,400, one chance per unit. What is the DPMO?",
+          "options": [
+            "104",
+            "0.57",
+            "5,652",
+            "56,522"
+          ],
+          "answer": 2,
+          "why": "104 ÷ 18,400 × 1,000,000 = 5,652 defects per million."
+        },
+        {
+          "q": "Two leads judge the same 20 cartons and disagree on five. What comes first?",
+          "options": [
+            "Start improving anyway",
+            "Average their answers",
+            "Fix the definition and the measurement before trusting the data",
+            "Use the stricter lead's answers"
+          ],
+          "answer": 2,
+          "why": "A measurement you cannot repeat will hide or invent improvements later."
+        }
+      ]
+    },
+    {
+      "id": "analyze",
+      "letter": "A",
+      "name": "Analyze",
+      "goal": "Find the few root causes behind most of the problem, and prove them with data rather than opinions.",
+      "output": "Verified root causes",
+      "ideas": [
+        [
+          "Pareto",
+          "Sort causes by size. Usually two or three carry about 80% of the problem: the vital few."
+        ],
+        [
+          "Stratify",
+          "Split the data by stage, shift, hour, product or route. Problems hide in averages."
+        ],
+        [
+          "Go and see",
+          "Watch the work where the number is produced, at the time it goes wrong."
+        ],
+        [
+          "5 Whys and the fishbone",
+          "Ask why until you reach something in the process you can change. The fishbone checks people, method, machines, material, measurement and environment."
+        ],
+        [
+          "Common or special cause",
+          "A control chart tells you whether you are looking at a normal level of the process or at a few unusual days."
+        ]
+      ],
+      "case": [
+        [
+          "Pareto",
+          "Stacking 56%, load securing 14%, handling 11%: three causes carry 81% of the damage."
+        ],
+        [
+          "Where and when",
+          "63% is found at loading, 60% on the late shift, most of it in the 11:00 departure wave."
+        ],
+        [
+          "On the floor",
+          "At the late wave, loaders build walls fast and put heavy parcels on top to fill gaps. There is no stacking rule at the dock."
+        ],
+        [
+          "Proof",
+          "Damage per 1,000 units is 2.4 times higher in the peak loading slots than in the others. The control chart shows no special days: the level comes from the method."
+        ]
+      ],
+      "mistakes": [
+        "Stopping at a person: \"the loader was careless\".",
+        "Fixing the loudest complaint instead of the largest bar.",
+        "Treating an opinion as a root cause without checking it in the data."
+      ],
+      "tools": [
+        [
+          "Damage Control",
+          "/tools/damage-control/",
+          "for the Pareto and the stage by type matrix"
+        ],
+        [
+          "5 Whys",
+          "/tools/five-whys/",
+          "to reach a cause you can change"
+        ],
+        [
+          "Control chart",
+          "/tools/sigma-control-chart/",
+          "to tell common from special causes"
+        ]
+      ],
+      "checklist": [
+        "The Pareto shows the vital few.",
+        "The top cause was seen on the floor, at the time it happens.",
+        "The root cause is in the process, not in a person.",
+        "Data confirms it: the cause and the problem move together."
+      ],
+      "quiz": [
+        {
+          "q": "The Pareto shows stacking 56%, load securing 14%, handling 11% and four other causes 19%. Where do you start?",
+          "options": [
+            "With all seven at once",
+            "With stacking, then load securing: together 70%",
+            "With the smallest, because it is quickest",
+            "With handling, because it is about people"
+          ],
+          "answer": 1,
+          "why": "The vital few carry most of the problem. Seven small projects at once rarely finish."
+        },
+        {
+          "q": "Is \"the loader was careless\" a root cause?",
+          "options": [
+            "Yes, it names who did it",
+            "Yes, if it happened twice",
+            "Not yet: ask why the process made it possible",
+            "No, because loaders are never the cause"
+          ],
+          "answer": 2,
+          "why": "People work inside a process. Ask what made the wrong way faster or easier than the right way."
+        },
+        {
+          "q": "The control chart shows no signals, but the level is too high. What does that mean?",
+          "options": [
+            "The data is wrong",
+            "Nothing needs to change",
+            "Find the one bad day and fix it",
+            "The level comes from the process itself: change the method, do not chase single days"
+          ],
+          "answer": 3,
+          "why": "That is common-cause variation. Only a change to the way the work is done moves the level."
+        }
+      ]
+    },
+    {
+      "id": "improve",
+      "letter": "I",
+      "name": "Improve",
+      "goal": "Design, test and prove a countermeasure that removes the root cause.",
+      "output": "A proven countermeasure",
+      "ideas": [
+        [
+          "Options, then choice",
+          "Collect several countermeasures and pick by impact and effort. The first idea is rarely the best."
+        ],
+        [
+          "Poka-yoke",
+          "Make the error hard to make: layout, markings, fixtures and defaults instead of reminders."
+        ],
+        [
+          "Standard work",
+          "Write the new way as a short, visual standard that a new person can follow on day one."
+        ],
+        [
+          "Pilot",
+          "Test small, on one dock or one shift, for long enough to see the effect. Plan, do, check, act."
+        ]
+      ],
+      "case": [
+        [
+          "Countermeasures",
+          "A stacking picture at every dock (heavy low, fragile high, no gaps), floor zones in the vehicle for heavy parcels, load bars after the last wall with a photo, and ten more minutes for the peak loading slots."
+        ],
+        [
+          "Pilot",
+          "Docks 3 and 4, two weeks, same definition and same log."
+        ],
+        [
+          "Result",
+          "Damage fell from 0.57% to 0.31%. The control chart shows ten days in a row below the old centre line. Loading time rose by two minutes per route: accepted by the sponsor."
+        ]
+      ],
+      "mistakes": [
+        "A reminder at the briefing instead of a change to the work.",
+        "Rolling out everywhere before the pilot proves anything.",
+        "Ignoring side effects on other numbers, such as loading time."
+      ],
+      "tools": [
+        [
+          "Floor checks",
+          "/tools/damage-control/",
+          "in Damage Control, to see whether the standard holds"
+        ],
+        [
+          "Control chart",
+          "/tools/sigma-control-chart/",
+          "with limits from before the change"
+        ]
+      ],
+      "checklist": [
+        "The countermeasure attacks the verified root cause.",
+        "It was piloted small before rollout.",
+        "Before and after are compared with the same definition.",
+        "Side effects on other numbers were checked."
+      ],
+      "quiz": [
+        {
+          "q": "Which countermeasure best prevents heavy parcels ending up on top?",
+          "options": [
+            "Remind loaders at every briefing",
+            "A stacking picture and floor zones, so heavy goes low by design",
+            "A warning letter after each damage",
+            "One more inspection before departure"
+          ],
+          "answer": 1,
+          "why": "Reminders fade and inspections find damage after it happens. Design the right way into the work."
+        },
+        {
+          "q": "Why pilot before rolling out?",
+          "options": [
+            "To learn cheaply and prove the effect before changing everything",
+            "Because the sponsor asked for it",
+            "To delay the decision",
+            "It is not needed when the idea is good"
+          ],
+          "answer": 0,
+          "why": "A pilot shows whether the change works, and what else it changes, at low cost."
+        },
+        {
+          "q": "After the pilot, damage fell but loading time rose six minutes per route. What next?",
+          "options": [
+            "Ignore it: damage was the goal",
+            "Stop the project",
+            "Look at the side effect and adjust before rolling out",
+            "Roll out and hope it settles"
+          ],
+          "answer": 2,
+          "why": "A fix that breaks another number will not survive. Adjust, then decide with the sponsor."
+        }
+      ]
+    },
+    {
+      "id": "control",
+      "letter": "C",
+      "name": "Control",
+      "goal": "Keep the gain: make the new way the standard, watch it, and hand it over to the process owner.",
+      "output": "A control plan and a handover",
+      "ideas": [
+        [
+          "Standard and training",
+          "Put the new way into the SOP and into onboarding, so it does not depend on the project team."
+        ],
+        [
+          "Control plan",
+          "What is measured, how often, by whom, and what to do when a signal appears: the reaction plan."
+        ],
+        [
+          "Control chart",
+          "Recalculate the limits from the new stable level and watch for signals, not for single bad days."
+        ],
+        [
+          "Close the project",
+          "Hand over to the process owner, record the savings and the lessons, and celebrate the team."
+        ]
+      ],
+      "case": [
+        [
+          "Standard",
+          "The stacking standard is in the SOP and the onboarding, with the dock pictures."
+        ],
+        [
+          "Control plan",
+          "Daily damage on a p-chart with limits from the pilot weeks. A day above the upper limit: the shift lead checks the same shift and runs 5 Whys within 24 hours. A weekly floor check at the dock."
+        ],
+        [
+          "Result",
+          "0.31% at 18,400 units a week: about 47 fewer damaged units and €500 less in credits a week. The outbound manager owns it from week 47."
+        ]
+      ],
+      "mistakes": [
+        "Declaring victory when the pilot ends.",
+        "Keeping the old limits on the chart, so no signal ever shows.",
+        "No owner after the project team leaves."
+      ],
+      "tools": [
+        [
+          "Control chart",
+          "/tools/sigma-control-chart/",
+          "with the new limits"
+        ],
+        [
+          "Damage Control",
+          "/tools/damage-control/",
+          "floor check, weekly"
+        ]
+      ],
+      "checklist": [
+        "The standard is written and trained.",
+        "The control chart runs with limits from the new level.",
+        "The reaction plan names an owner.",
+        "The project is handed over, with savings and lessons recorded."
+      ],
+      "quiz": [
+        {
+          "q": "What must a control plan include?",
+          "options": [
+            "Only the target",
+            "What to measure, how often, who, and what to do when a signal appears",
+            "The names of the project team",
+            "The original problem statement"
+          ],
+          "answer": 1,
+          "why": "Without a reaction plan, a signal on the chart is just a red dot nobody acts on."
+        },
+        {
+          "q": "After the improvement, what happens to the control limits?",
+          "options": [
+            "They stay as they were",
+            "They are set to the target",
+            "They are recalculated from the new stable period",
+            "They are removed"
+          ],
+          "answer": 2,
+          "why": "Old limits are too wide for the new process: a relapse would stay inside them unnoticed."
+        },
+        {
+          "q": "Today is higher than yesterday but inside the limits. What does the reaction plan say?",
+          "options": [
+            "Nothing special: it is noise, keep watching",
+            "Call a meeting",
+            "Run 5 Whys on the day",
+            "Change the standard"
+          ],
+          "answer": 0,
+          "why": "Reacting to noise wastes time and can make the process worse. React to signals."
+        }
+      ]
+    }
+  ],
+  "glossary": [
+    [
+      "CTQ",
+      "Critical to Quality: a customer need written as something you can measure."
+    ],
+    [
+      "DMAIC",
+      "Define, Measure, Analyze, Improve, Control: the five steps of a Six Sigma improvement project."
+    ],
+    [
+      "DPMO",
+      "Defects per million opportunities: defects ÷ (units × chances per unit) × 1,000,000."
+    ],
+    [
+      "Sigma level",
+      "A way to express how often a process fails. Four sigma is about 6,200 defects per million; six sigma is 3.4."
+    ],
+    [
+      "Yield",
+      "The share of units done right the first time."
+    ],
+    [
+      "SIPOC",
+      "Suppliers, Inputs, Process, Outputs, Customers: a one-line map of a process."
+    ],
+    [
+      "Operational definition",
+      "An exact, shared description of what counts, so everyone measures the same way."
+    ],
+    [
+      "Baseline",
+      "How the process performs before you change it."
+    ],
+    [
+      "Pareto",
+      "Causes sorted by size; the few largest usually carry most of the problem."
+    ],
+    [
+      "Root cause",
+      "The cause in the process that, removed, stops the problem coming back."
+    ],
+    [
+      "Common cause",
+      "The normal variation built into a process. Only changing the process changes it."
+    ],
+    [
+      "Special cause",
+      "Something unusual on a specific day or batch. Find it and remove it."
+    ],
+    [
+      "Control chart",
+      "A chart of a measure over time with limits that separate normal noise from real signals."
+    ],
+    [
+      "Poka-yoke",
+      "Error-proofing: design that makes the mistake hard or impossible."
+    ],
+    [
+      "Standard work",
+      "The current best way to do a job, written short and visual."
+    ],
+    [
+      "Gemba",
+      "The place where the work is done. \"Go to the gemba\": go and see."
+    ],
+    [
+      "Kaizen",
+      "Small, continuous improvements made by the people who do the work."
+    ],
+    [
+      "Control plan",
+      "What is measured after the project, by whom, how often, and how to react to signals."
+    ]
+  ],
+  "wastes": [
+    [
+      "D",
+      "Defects",
+      "Damaged, incomplete or wrong orders; re-packing and re-delivery."
+    ],
+    [
+      "O",
+      "Overproduction",
+      "Picking or packing before the order or the vehicle is ready."
+    ],
+    [
+      "W",
+      "Waiting",
+      "Loaders waiting for the wave, drivers waiting for the load, trucks waiting for a dock."
+    ],
+    [
+      "N",
+      "Non-used talent",
+      "Loaders who know why damage happens but are never asked."
+    ],
+    [
+      "T",
+      "Transport",
+      "Moving pallets twice because the staging area is in the wrong place."
+    ],
+    [
+      "I",
+      "Inventory",
+      "Parcels left overnight on the floor; stock that hides counting errors."
+    ],
+    [
+      "M",
+      "Motion",
+      "Walking to fetch scanners, tape or labels; bending for heavy items stored low."
+    ],
+    [
+      "E",
+      "Extra processing",
+      "Scanning the same parcel three times, or double checks nobody reads."
+    ]
+  ],
+  "charter": [
+    [
+      "name",
+      "Project name",
+      "e.g. Outbound damage below 0.30%",
+      false
+    ],
+    [
+      "problem",
+      "Problem statement",
+      "What, where, since when, how much, and the gap to the target",
+      true
+    ],
+    [
+      "ctq",
+      "CTQ and measure",
+      "e.g. Parcel arrives undamaged; damaged units ÷ units shipped",
+      true
+    ],
+    [
+      "baseline",
+      "Baseline",
+      "e.g. 0.57%, DPMO 5,652, sigma 4.03 (week 38)",
+      false
+    ],
+    [
+      "target",
+      "Target",
+      "e.g. 0.30% by week 46",
+      false
+    ],
+    [
+      "scopeIn",
+      "In scope",
+      "e.g. Pick face to driver handover",
+      false
+    ],
+    [
+      "scopeOut",
+      "Out of scope",
+      "e.g. Linehaul, supplier packaging",
+      false
+    ],
+    [
+      "sponsor",
+      "Sponsor",
+      "Who owns the result",
+      false
+    ],
+    [
+      "team",
+      "Team",
+      "Names and roles",
+      false
+    ],
+    [
+      "benefit",
+      "Expected benefit",
+      "e.g. About €500 a week in credits",
+      false
+    ],
+    [
+      "dates",
+      "Milestones",
+      "e.g. D wk 39 · M wk 41 · A wk 42 · I wk 45 · C wk 47",
+      true
+    ]
+  ],
+  "charterExample": {
+    "name": "Outbound damage below 0.30%",
+    "problem": "In weeks 36 to 38, 0.57% of outbound units left the hub damaged (104 of 18,400 in week 38) against 0.30% promised to the customer. Credits cost about €1,150 a week.",
+    "ctq": "The parcel arrives undamaged. Measure: damaged units ÷ units shipped, logged by stage and cause.",
+    "baseline": "0.57%, DPMO 5,652, sigma level 4.03 (week 38)",
+    "target": "0.30% or lower by week 46, without longer loading times",
+    "scopeIn": "From the pick face to handover to the driver",
+    "scopeOut": "Linehaul, supplier packaging",
+    "sponsor": "Outbound manager",
+    "team": "Shift leads early and late, two loaders, one driver, quality coordinator",
+    "benefit": "About €500 a week in credits, fewer customer complaints",
+    "dates": "Define week 39 · Measure week 41 · Analyze week 42 · Improve week 45 · Control week 47"
+  }
+}
