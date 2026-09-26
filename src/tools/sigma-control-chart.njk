@@ -1,0 +1,176 @@
+---
+layout: layouts/base.njk
+title: Sigma & Control Chart
+description: "A sigma calculator, a perfect delivery calculator and a p-chart that shows whether today's number is a real signal or normal noise. Free, private, in the browser."
+activeNav: /tools.html
+permalink: /tools/sigma-control-chart/
+---
+<section class="shell page-hero tool-hero">
+  <p class="eyebrow">Free tool · Six Sigma</p>
+  <h1>Sigma &amp; Control Chart</h1>
+  <p class="lede">Turn defects into a sigma level, combine on time, undamaged and complete into one perfect delivery number, and see on a control chart whether a bad day is a signal or just noise.</p>
+</section>
+
+<section class="shell sc-calc" data-sigma-calc>
+  <div class="section-heading">
+    <div>
+      <p class="kicker">1 · Calculator</p>
+      <h2>How good is the process?</h2>
+    </div>
+    <p>Type the numbers from any period. Everything updates as you type, and nothing leaves your browser.</p>
+  </div>
+
+  <div class="sc-calc-grid">
+    <form class="dl-box" data-calc-sigma>
+      <p class="kicker">From defects to sigma</p>
+      <div class="dl-grid sc-grid-3">
+        <div class="field">
+          <label for="sc-units">Units</label>
+          <input id="sc-units" name="units" type="number" min="0" step="1" inputmode="numeric" placeholder="e.g. 18400" data-calc>
+        </div>
+        <div class="field">
+          <label for="sc-defects">Defects</label>
+          <input id="sc-defects" name="defects" type="number" min="0" step="1" inputmode="numeric" placeholder="e.g. 104" data-calc>
+        </div>
+        <div class="field">
+          <label for="sc-opps">Chances per unit</label>
+          <input id="sc-opps" name="opportunities" type="number" min="1" step="1" inputmode="numeric" value="1" data-calc>
+        </div>
+      </div>
+      <div class="dl-stats sc-stats" data-sigma-out aria-live="polite"></div>
+      <p class="form-note sc-note">Chances per unit: how many ways one unit can fail that you count separately. Keep it at 1 when you count damaged or incomplete units.</p>
+    </form>
+
+    <form class="dl-box" data-calc-perfect>
+      <p class="kicker">Perfect delivery</p>
+      <div class="dl-grid sc-grid-3">
+        <div class="field">
+          <label for="sc-ontime">On time %</label>
+          <input id="sc-ontime" name="onTime" type="number" min="0" max="100" step="0.01" inputmode="decimal" placeholder="e.g. 96.5" data-calc>
+        </div>
+        <div class="field">
+          <label for="sc-undamaged">Undamaged %</label>
+          <input id="sc-undamaged" name="undamaged" type="number" min="0" max="100" step="0.01" inputmode="decimal" placeholder="e.g. 99.4" data-calc>
+        </div>
+        <div class="field">
+          <label for="sc-complete">Complete %</label>
+          <input id="sc-complete" name="complete" type="number" min="0" max="100" step="0.01" inputmode="decimal" placeholder="e.g. 99.1" data-calc>
+        </div>
+      </div>
+      <div class="dl-stats sc-stats" data-perfect-out aria-live="polite"></div>
+      <p class="form-note sc-note">A delivery is perfect only when it is on time, undamaged and complete. Take the numbers from <a class="inline-link" href="/tools/delay-analyzer/">Delay Analyzer</a>, <a class="inline-link" href="/tools/damage-control/">Damage Control</a> and <a class="inline-link" href="/tools/incomplete-control/">Incomplete Control</a>. Multiplying them assumes the three failures are independent, so read the result as a close estimate.</p>
+    </form>
+  </div>
+
+  <div class="dl-box sc-reference">
+    <p class="kicker">What a sigma level means</p>
+    <div class="dl-table-wrap">
+      <table class="dl-table">
+        <thead><tr><th scope="col">Sigma level</th><th scope="col" class="num">Defects per million</th><th scope="col" class="num">Yield</th><th scope="col" class="num">Failures per 1,000</th></tr></thead>
+        <tbody data-sigma-table></tbody>
+      </table>
+    </div>
+    <p class="form-note sc-note">Short-term sigma with the usual 1.5 shift. Most warehouse and delivery processes run between 3 and 4.5 sigma; every step up means roughly three to ten times fewer failures.</p>
+  </div>
+</section>
+
+<section class="shell tool-layout dl-setup sc-chart-setup">
+  <div class="tool-panel" data-control-chart>
+    <p class="kicker sc-section-kicker">2 · Control chart</p>
+    <fieldset class="dl-box">
+      <legend class="kicker">What you are counting</legend>
+      <div class="dl-grid">
+        <div class="field">
+          <label for="cc-metric">Defect</label>
+          <input id="cc-metric" name="metric" placeholder="e.g. Damaged units" autocomplete="off" data-setting>
+        </div>
+        <div class="field">
+          <label for="cc-unit">Out of</label>
+          <input id="cc-unit" name="unit" placeholder="e.g. Units handled" autocomplete="off" data-setting>
+        </div>
+        <div class="field">
+          <label for="cc-baseline">Limits from the first <span class="optional">days, optional</span></label>
+          <input id="cc-baseline" name="baseline" type="number" min="0" step="1" inputmode="numeric" placeholder="All days" data-setting>
+        </div>
+      </div>
+    </fieldset>
+
+    <form class="dl-box" data-entry>
+      <fieldset>
+        <legend class="kicker">Add a day</legend>
+        <div class="dl-grid">
+          <div class="field">
+            <label for="cc-date">Date</label>
+            <input id="cc-date" name="date" type="date" required>
+          </div>
+          <div class="field">
+            <label for="cc-n">Handled</label>
+            <input id="cc-n" name="n" type="number" min="1" step="1" inputmode="numeric" required>
+          </div>
+          <div class="field">
+            <label for="cc-d">Defects</label>
+            <input id="cc-d" name="d" type="number" min="0" step="1" inputmode="numeric" required>
+          </div>
+          <div class="field dl-wide">
+            <label for="cc-note">Note <span class="optional">optional</span></label>
+            <input id="cc-note" name="note" placeholder="e.g. New stacking standard starts" autocomplete="off">
+          </div>
+        </div>
+        <div class="tool-actions">
+          <button class="button-primary" type="submit">Add day</button>
+          <p class="form-note" data-entry-status aria-live="polite"></p>
+        </div>
+      </fieldset>
+    </form>
+
+    <details class="dl-box dl-paste">
+      <summary class="kicker">Or paste from Excel</summary>
+      <p class="form-note">One row per day, columns in this order: <strong>date, handled, defects, note</strong>. Tabs, semicolons or commas all work, and a header row is skipped. A date that is already in the chart is replaced.</p>
+      <div class="field">
+        <label class="visually-hidden" for="cc-paste">Rows to import</label>
+        <textarea id="cc-paste" rows="5" placeholder="2026-09-14	2600	11"></textarea>
+      </div>
+      <div class="tool-actions">
+        <button class="button-secondary" type="button" data-import>Import rows</button>
+        <p class="form-note" data-import-status aria-live="polite"></p>
+      </div>
+    </details>
+
+    <div class="dl-box">
+      <div class="dl-log-head">
+        <p class="kicker">Days</p>
+        <p class="form-note" data-log-count></p>
+      </div>
+      <div class="dl-table-wrap" data-log-wrap hidden>
+        <table class="dl-table">
+          <thead><tr><th scope="col">Date</th><th scope="col" class="num">Handled</th><th scope="col" class="num">Defects</th><th scope="col" class="num">Rate</th><th scope="col">Note</th><th scope="col"><span class="visually-hidden">Remove</span></th></tr></thead>
+          <tbody data-log></tbody>
+        </table>
+      </div>
+      <p class="dl-empty" data-log-empty>No days yet. Add them above, paste from Excel, or <button class="button-ghost" type="button" data-example>load an example month</button>.</p>
+      <div class="tool-actions">
+        <button class="button-secondary" type="button" data-csv>Download CSV</button>
+        <button class="button-secondary" type="button" data-clear>Clear days</button>
+      </div>
+    </div>
+  </div>
+
+  <aside class="tool-aside">
+    <p class="kicker">How to read it</p>
+    <p>The centre line is your average defect rate. The limits show how far a day can move by normal noise alone, given how much was handled that day.</p>
+    <ul class="tips">
+      {%- for rule in sigmaChart.rules %}
+      <li><strong>{{ rule.name }}.</strong> {{ rule.text }}</li>
+      {%- endfor %}
+    </ul>
+    <p>Everything else is noise. Asking "what went wrong yesterday?" about a day inside the limits sends people looking for a cause that is not there.</p>
+    <p>When a signal is worse, take that day through <a class="inline-link" href="/tools/five-whys/">5 Whys</a>. For daily numbers, use the rows from <a class="inline-link" href="/tools/damage-control/">Damage Control</a> or <a class="inline-link" href="/tools/incomplete-control/">Incomplete Control</a> per day.</p>
+    <p class="privacy-note">Your numbers stay in this browser. Nothing is sent or uploaded, and you can clear them at any time.</p>
+  </aside>
+</section>
+
+<section class="shell dl-results sc-results" data-results tabindex="-1" hidden></section>
+
+<script type="application/json" id="sigma-chart-data">{{ sigmaChart | dump | safe }}</script>
+<script src="/js/tool-kit.js" defer></script>
+<script src="/js/sigma-chart.js" defer></script>

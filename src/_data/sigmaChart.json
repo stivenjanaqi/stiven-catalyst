@@ -1,0 +1,101 @@
+{
+  "storageKey": "sc-sigma-chart",
+  "sigmaTable": [
+    {
+      "sigma": 2,
+      "dpmo": 308538
+    },
+    {
+      "sigma": 2.5,
+      "dpmo": 158655
+    },
+    {
+      "sigma": 3,
+      "dpmo": 66807
+    },
+    {
+      "sigma": 3.5,
+      "dpmo": 22750
+    },
+    {
+      "sigma": 4,
+      "dpmo": 6210
+    },
+    {
+      "sigma": 4.5,
+      "dpmo": 1350
+    },
+    {
+      "sigma": 5,
+      "dpmo": 233
+    },
+    {
+      "sigma": 5.5,
+      "dpmo": 32
+    },
+    {
+      "sigma": 6,
+      "dpmo": 3.4
+    }
+  ],
+  "example": {
+    "metric": "Damaged units",
+    "unit": "Units handled",
+    "baseline": "20",
+    "rows": [
+      "2026-08-24|2900|20|",
+      "2026-08-25|2600|13|",
+      "2026-08-26|2600|15|",
+      "2026-08-27|3200|16|",
+      "2026-08-28|2600|17|",
+      "2026-08-29|2600|13|",
+      "2026-08-30|3050|14|",
+      "2026-08-31|3200|19|",
+      "2026-09-01|3050|22|",
+      "2026-09-02|2750|17|",
+      "2026-09-03|2800|9|",
+      "2026-09-04|3200|40|Cage wall collapsed on dock 3",
+      "2026-09-05|3200|8|",
+      "2026-09-06|2600|21|",
+      "2026-09-07|3200|20|",
+      "2026-09-08|2750|13|",
+      "2026-09-09|3200|20|",
+      "2026-09-10|2950|19|",
+      "2026-09-11|2800|18|",
+      "2026-09-12|2800|20|",
+      "2026-09-13|2750|6|New stacking standard starts",
+      "2026-09-14|2600|11|",
+      "2026-09-15|3200|12|",
+      "2026-09-16|2800|9|",
+      "2026-09-17|3200|7|",
+      "2026-09-18|3200|11|",
+      "2026-09-19|3050|8|",
+      "2026-09-20|2750|10|",
+      "2026-09-21|2800|9|",
+      "2026-09-22|2900|8|"
+    ]
+  },
+  "rules": [
+    {
+      "id": "beyond",
+      "name": "Outside the limits",
+      "text": "One day above the upper limit (or below the lower one). Something was different that day: find it while people still remember."
+    },
+    {
+      "id": "run",
+      "name": "Shift",
+      "text": "Eight days or more in a row on the same side of the centre line. The process has moved: after a change you made, that is proof it worked; without one, find what changed."
+    },
+    {
+      "id": "trend",
+      "name": "Trend",
+      "text": "Six days or more in a row, each higher (or each lower) than the one before. Something is drifting: wear, backlog, staffing or a slow change in volume."
+    }
+  ],
+  "verdicts": {
+    "stable": "No signals. The ups and downs are the normal noise of this process. Reacting to single days will not help and may make it worse: to get a better number, change the process itself.",
+    "badSpecial": "The chart shows days that are not normal noise. Investigate those days first: what was different in volume, people, equipment or method?",
+    "goodSpecial": "The chart shows a lasting improvement. Find out what made the difference and make it the standard, then recalculate the limits from the new level.",
+    "short": "Fewer than 12 days in the chart. The limits are rough; keep adding days before you trust a signal."
+  }
+}
