@@ -1174,6 +1174,7 @@ button, input, select { font: inherit; }
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
+  align-items: end;
 }
 .dl-grid .dl-wide { grid-column: 1 / -1; }
 .field select {
@@ -1227,6 +1228,7 @@ button, input, select { font: inherit; }
 .dl-table tbody tr:last-child > * { border-bottom: 0; }
 .dl-table .num { text-align: right; }
 .dl-table .dl-note { max-width: 220px; overflow: hidden; text-overflow: ellipsis; color: var(--muted); }
+.dl-table td.is-late { color: var(--ink); font-weight: 800; }
 .dl-remove {
   width: 28px;
   height: 28px;
@@ -1288,6 +1290,7 @@ button, input, select { font: inherit; }
   gap: 20px;
   margin-bottom: 20px;
 }
+.dl-result-grid > :last-child:nth-child(odd) { grid-column: 1 / -1; }
 .dl-panel {
   display: grid;
   align-content: start;
