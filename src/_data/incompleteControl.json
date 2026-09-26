@@ -1,0 +1,151 @@
+{
+  "storageKey": "sc-incomplete-control",
+  "text": {
+    "tool": "Incomplete Control",
+    "one": "incomplete order",
+    "many": "incomplete orders",
+    "allNoun": "incomplete orders",
+    "volumeNoun": "orders",
+    "volumeLabel": "Orders shipped",
+    "volumePlaceholder": "e.g. 6200",
+    "targetLabel": "Target incomplete %",
+    "targetPlaceholder": "e.g. 0.5",
+    "rateLabel": "Incomplete rate",
+    "complement": { "label": "Complete orders", "note": "left with every item and parcel" },
+    "periodPlaceholder": "e.g. Week 38, e-commerce",
+    "entryLegend": "Log an incomplete order",
+    "countLabel": "Orders affected",
+    "countShort": "orders",
+    "notePlaceholder": "e.g. Size M picked instead of L, location B-14",
+    "pasteRow": "One row per miss",
+    "pastePlaceholder": "2026-09-14\tEarly\tPicking\tWrong item\tPick error\t3\t27",
+    "empty": "No incomplete orders logged yet.",
+    "stageTitle": "Where it went wrong",
+    "stageNote": "In process order. Log where the miss was created, not where the customer noticed it.",
+    "stagePhrase": "traced to",
+    "matrixTitle": "Stage and error type",
+    "csv": "incomplete-log",
+    "tips": [
+      ["Log where it went wrong.", "A missing item is usually found by packing or by the customer, but created earlier. Trace it back before you log it."],
+      ["Count orders, not items.", "One order with three missing items is one incomplete order; put the detail in the note."],
+      ["Add the volume.", "With orders shipped you get the incomplete rate, the share of complete orders, DPMO and sigma level."]
+    ],
+    "checkTitle": "Does the order leave complete?",
+    "checkIntro": "Walk from the pick face to the vehicle and tick what you actually see today. Every unticked line is a place where an item or a parcel can go missing."
+  },
+  "fields": [
+    { "name": "shift", "label": "Shift", "options": ["Early", "Late", "Night"] },
+    { "name": "stage", "label": "Stage", "options": ["Receiving", "Replenishment", "Picking", "Packing", "Sorting and loading", "Delivery"] },
+    { "name": "type", "label": "Error type", "options": ["Missing item", "Short quantity", "Wrong item", "Missing parcel", "Other"] },
+    { "name": "cause", "label": "Cause", "options": ["Stock accuracy", "Pick error", "Pack error", "Scan skipped", "Sort or load error", "System or data", "Unknown"] }
+  ],
+  "stages": {
+    "Receiving": {
+      "meaning": "Goods were booked in that never arrived, or arrived in a different quantity. Every pick from that stock comes up short later.",
+      "moves": [
+        "Count at receiving against the delivery, not against the purchase order.",
+        "Use blind counts: the receiver counts first, then sees the expected quantity.",
+        "Book differences the same day, so the system never promises stock that is not there."
+      ],
+      "question": "Who counts the goods, and do they know the expected number before they count?"
+    },
+    "Replenishment": {
+      "meaning": "The pick face runs empty or gets the wrong item while the system still shows stock. Pickers short-pick or take the neighbour.",
+      "moves": [
+        "Trigger replenishment before the face is empty, not after.",
+        "Scan location and item at every put-away to the pick face.",
+        "Start each shift with the faces that had repeated shorts the day before."
+      ],
+      "question": "How does a picker find out a location is empty, and what do they do then?"
+    },
+    "Picking": {
+      "meaning": "The wrong item or the wrong quantity goes into the tote. Look-alike items, multi-unit lines and time pressure drive most of it.",
+      "moves": [
+        "Scan every item and confirm the quantity on multi-unit lines.",
+        "Separate look-alikes: sizes, colours and variants of one product never side by side.",
+        "Make reporting a short pick faster than working around it."
+      ],
+      "question": "What happens when the picker cannot find the full quantity?"
+    },
+    "Packing": {
+      "meaning": "An item is left on the table, slips into the next order or goes into the wrong box.",
+      "moves": [
+        "Scan each item against the order before the box is closed.",
+        "One order on the table at a time, and a clear table before the next one.",
+        "Check the weight on orders where the expected weight is known."
+      ],
+      "question": "How does the packer know the order is complete before closing the box?"
+    },
+    "Sorting and loading": {
+      "meaning": "Parcels of one order are separated: one goes on the vehicle, another stays behind or goes to the wrong route.",
+      "moves": [
+        "Count parcels per order at loading: two of three is not loaded.",
+        "Scan every parcel onto the vehicle and check the scan-out against the route.",
+        "Sweep the sort area at the end of each wave for parcels left behind."
+      ],
+      "question": "What stops the last parcel of an order from staying on the floor?"
+    },
+    "Delivery": {
+      "meaning": "Parcels stay in the vehicle, go to the wrong address, or only part of a multi-parcel order is handed over.",
+      "moves": [
+        "Scan every parcel at handover and count multi-parcel orders at the door.",
+        "Check that the vehicle is empty at the end of the route.",
+        "Follow up every \"not received\" within a day, while the driver still remembers the stop."
+      ],
+      "question": "How does the driver know every parcel for this stop has been handed over?"
+    }
+  },
+  "causes": {
+    "Stock accuracy": "Cycle-count the locations behind the misses the same day, and find where the stock record went wrong, not only what the count is now.",
+    "Pick error": "Watch picks at the location with the most misses. Most pick errors are designed in by layout, labels and look-alike items.",
+    "Pack error": "Make the order visible at the packing table and scan against it. Memory does not hold at peak.",
+    "Scan skipped": "Ask why the scan was skipped. A slow scanner, a missing label or a target that punishes scanning time are more common than carelessness.",
+    "Sort or load error": "Count and scan at the vehicle door. Orders with more than one parcel need their own check.",
+    "System or data": "Check the master data: pack sizes, units of measure, bundles and kits often promise quantities the shelf does not hold.",
+    "Unknown": "A large Unknown share means the log is not yet good enough. Record where it went wrong and why at the moment a miss is found."
+  },
+  "checklist": [
+    "Every pick is scanned: location and item.",
+    "Quantities on multi-unit lines are counted and confirmed, not assumed.",
+    "Look-alike items are not stored next to each other.",
+    "Short picks are reported at once, not left for packing to find.",
+    "Packing scans each item against the order before the box is closed.",
+    "Only one order is on the packing table at a time.",
+    "Multi-parcel orders are counted and kept together before loading.",
+    "Locations with shortages are cycle-counted the same day.",
+    "Every vehicle is checked empty at the end of the route.",
+    "Every incomplete order is logged with where it went wrong and why."
+  ],
+  "example": {
+    "period": "Example week",
+    "volume": 6200,
+    "target": 0.5,
+    "rows": [
+      "2026-09-14|Early|Picking|Wrong item|Pick error|3|27",
+      "2026-09-14|Late|Picking|Short quantity|Stock accuracy|2|18",
+      "2026-09-14|Late|Packing|Missing item|Pack error|1|9",
+      "2026-09-14|Night|Picking|Short quantity|Scan skipped|2|18",
+      "2026-09-15|Early|Picking|Wrong item|Pick error|4|36",
+      "2026-09-15|Late|Replenishment|Short quantity|Stock accuracy|3|27",
+      "2026-09-15|Late|Sorting and loading|Missing parcel|Sort or load error|2|24",
+      "2026-09-16|Early|Picking|Short quantity|Pick error|3|27",
+      "2026-09-16|Late|Picking|Missing item|Scan skipped|3|27",
+      "2026-09-16|Late|Receiving|Short quantity|Stock accuracy|2|18",
+      "2026-09-16|Night|Packing|Missing item|Pack error|2|18",
+      "2026-09-17|Early|Picking|Wrong item|Pick error|2|18",
+      "2026-09-17|Late|Picking|Wrong item|Pick error|4|36",
+      "2026-09-17|Late|Picking|Short quantity|Stock accuracy|3|27",
+      "2026-09-17|Night|Delivery|Missing parcel|Sort or load error|1|12",
+      "2026-09-18|Early|Picking|Short quantity|Scan skipped|2|18",
+      "2026-09-18|Late|Picking|Wrong item|Pick error|3|27",
+      "2026-09-18|Late|Picking|Short quantity|System or data|2|",
+      "2026-09-18|Late|Packing|Missing item|Pack error|1|9",
+      "2026-09-19|Early|Picking|Missing item|Pick error|2|18",
+      "2026-09-19|Late|Replenishment|Short quantity|Stock accuracy|2|18",
+      "2026-09-19|Late|Picking|Wrong item|Scan skipped|2|18",
+      "2026-09-19|Night|Sorting and loading|Missing parcel|Sort or load error|1|12",
+      "2026-09-20|Early|Picking|Wrong item|Pick error|3|27",
+      "2026-09-20|Early|Delivery|Missing parcel|Unknown|1|"
+    ]
+  }
+}

@@ -16,6 +16,30 @@
     "cta": "Open the worksheet"
   },
   {
+    "name": "Damage Control",
+    "type": "Warehouse",
+    "time": "Ongoing",
+    "summary": "Log damaged units by stage and cause. See the damage rate, DPMO and sigma level, the few causes behind most of it, and where to start.",
+    "url": "/tools/damage-control/",
+    "cta": "Open the damage log"
+  },
+  {
+    "name": "Incomplete Control",
+    "type": "Warehouse",
+    "time": "Ongoing",
+    "summary": "Log orders that left without every item or parcel. See the incomplete rate, DPMO and sigma level, the causes behind most misses, and where they start.",
+    "url": "/tools/incomplete-control/",
+    "cta": "Open the order log"
+  },
+  {
+    "name": "Delay Analyzer",
+    "type": "Warehouse",
+    "time": "Soon",
+    "summary": "Separate a late start at the dock from delay on the road, so the right team owns the fix. On-time rate, delay by reason, hour and shift.",
+    "url": "",
+    "cta": ""
+  },
+  {
     "name": "Shift Handover",
     "type": "Checklist",
     "time": "Soon",

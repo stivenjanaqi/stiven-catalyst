@@ -1,0 +1,15 @@
+---
+layout: layouts/base.njk
+title: Damage Control
+description: "A private damage log for warehouse and delivery teams: damage rate, DPMO and sigma level, a Pareto of causes, where in the process damage happens, and a loading floor check."
+activeNav: /tools.html
+permalink: /tools/damage-control/
+---
+<section class="shell page-hero tool-hero">
+  <p class="eyebrow">Free tool · Warehouse</p>
+  <h1>Damage Control</h1>
+  <p class="lede">Log every damaged unit with the stage where it was found and the cause behind it. The tool shows your damage rate, the few causes behind most of it, and where in the process to start.</p>
+</section>
+
+{% set cfg = damageControl %}
+{% include "partials/defect-log.njk" %}

@@ -1,0 +1,136 @@
+{#- A private defect log (damage, incomplete orders, ...). The page sets `cfg` to its data file; defect-log.js does the rest. -#}
+{%- set t = cfg.text -%}
+<section class="shell tool-layout dl-setup">
+  <div class="tool-panel" data-defect-log>
+    <fieldset class="dl-box">
+      <legend class="kicker">1 · Period</legend>
+      <div class="dl-grid">
+        <div class="field dl-wide">
+          <label for="dl-period">Period <span class="optional">optional</span></label>
+          <input id="dl-period" name="period" placeholder="{{ t.periodPlaceholder }}" autocomplete="off" data-setting>
+        </div>
+        <div class="field">
+          <label for="dl-volume">{{ t.volumeLabel }}</label>
+          <input id="dl-volume" name="volume" type="number" min="0" step="1" inputmode="numeric" placeholder="{{ t.volumePlaceholder }}" data-setting>
+        </div>
+        <div class="field">
+          <label for="dl-target">{{ t.targetLabel }} <span class="optional">optional</span></label>
+          <input id="dl-target" name="target" type="number" min="0" step="0.01" inputmode="decimal" placeholder="{{ t.targetPlaceholder }}" data-setting>
+        </div>
+      </div>
+    </fieldset>
+
+    <form class="dl-box" data-entry>
+      <fieldset>
+        <legend class="kicker">2 · {{ t.entryLegend }}</legend>
+        <div class="dl-grid">
+          <div class="field">
+            <label for="dl-date">Date</label>
+            <input id="dl-date" name="date" type="date" required>
+          </div>
+          {%- for f in cfg.fields %}
+          <div class="field">
+            <label for="dl-{{ f.name }}">{{ f.label }}</label>
+            <select id="dl-{{ f.name }}" name="{{ f.name }}">
+              {%- for option in f.options %}
+              <option>{{ option }}</option>
+              {%- endfor %}
+            </select>
+          </div>
+          {%- endfor %}
+          <div class="field">
+            <label for="dl-units">{{ t.countLabel }}</label>
+            <input id="dl-units" name="units" type="number" min="1" step="1" value="1" inputmode="numeric" required>
+          </div>
+          <div class="field">
+            <label for="dl-cost">Cost € <span class="optional">optional</span></label>
+            <input id="dl-cost" name="cost" type="number" min="0" step="0.01" inputmode="decimal">
+          </div>
+          <div class="field dl-wide">
+            <label for="dl-note">Note <span class="optional">optional</span></label>
+            <input id="dl-note" name="note" placeholder="{{ t.notePlaceholder }}" autocomplete="off">
+          </div>
+        </div>
+        <div class="tool-actions">
+          <button class="button-primary" type="submit">Add to log</button>
+          <p class="form-note" data-entry-status aria-live="polite"></p>
+        </div>
+      </fieldset>
+    </form>
+
+    <details class="dl-box dl-paste">
+      <summary class="kicker">Or paste from Excel</summary>
+      <p class="form-note">{{ t.pasteRow }}, columns in this order: <strong>date, {% for f in cfg.fields %}{{ f.label | lower }}, {% endfor %}{{ t.countShort }}, cost, note</strong>. Tabs, semicolons or commas all work, and a header row is skipped. Your own {{ cfg.fields[1].label | lower }} or {{ cfg.fields[3].label | lower }} names are kept as they are.</p>
+      <div class="field">
+        <label class="visually-hidden" for="dl-paste">Rows to import</label>
+        <textarea id="dl-paste" rows="5" placeholder="{{ t.pastePlaceholder }}"></textarea>
+      </div>
+      <div class="tool-actions">
+        <button class="button-secondary" type="button" data-import>Import rows</button>
+        <p class="form-note" data-import-status aria-live="polite"></p>
+      </div>
+    </details>
+
+    <div class="dl-box">
+      <div class="dl-log-head">
+        <p class="kicker">3 · Log</p>
+        <p class="form-note" data-log-count></p>
+      </div>
+      <div class="dl-table-wrap" data-log-wrap hidden>
+        <table class="dl-table">
+          <thead>
+            <tr><th scope="col">Date</th>{% for f in cfg.fields %}<th scope="col">{{ f.label }}</th>{% endfor %}<th scope="col" class="num">{{ t.countShort | capitalize }}</th><th scope="col" class="num">€</th><th scope="col">Note</th><th scope="col"><span class="visually-hidden">Remove</span></th></tr>
+          </thead>
+          <tbody data-log></tbody>
+        </table>
+      </div>
+      <p class="dl-empty" data-log-empty>{{ t.empty }} Add the first one above, paste from Excel, or <button class="button-ghost" type="button" data-example>load an example week</button>.</p>
+      <div class="tool-actions">
+        <button class="button-secondary" type="button" data-csv>Download CSV</button>
+        <button class="button-secondary" type="button" data-clear>Clear log</button>
+      </div>
+    </div>
+  </div>
+
+  <aside class="tool-aside">
+    <p class="kicker">How to use it</p>
+    <ul class="tips">
+      {%- for tip in t.tips %}
+      <li><strong>{{ tip[0] }}</strong> {{ tip[1] }}</li>
+      {%- endfor %}
+      <li><strong>Fix the vital few.</strong> Two or three causes usually carry most of the problem. Start there, then take the top one through <a class="inline-link" href="/tools/five-whys/">5 Whys</a>.</li>
+    </ul>
+    <p class="privacy-note">Your log stays in this browser. Nothing is sent or uploaded, and you can clear it at any time.</p>
+  </aside>
+</section>
+
+<section class="shell dl-results" data-results tabindex="-1" hidden></section>
+
+<section class="shell dl-check" data-floor-check>
+  <div class="section-heading">
+    <div>
+      <p class="kicker">Floor check</p>
+      <h2>{{ t.checkTitle }}</h2>
+    </div>
+    <p>{{ t.checkIntro }}</p>
+  </div>
+  <ol class="dl-checklist">
+    {%- for item in cfg.checklist %}
+    <li>
+      <label class="dl-check-item">
+        <input type="checkbox" name="check{{ loop.index0 }}">
+        <span>{{ item }}</span>
+      </label>
+    </li>
+    {%- endfor %}
+  </ol>
+  <div class="dl-check-foot">
+    <p class="dl-score" data-check-score aria-live="polite"></p>
+    <div class="tool-actions">
+      <button class="button-secondary" type="button" data-check-reset>Reset the check</button>
+    </div>
+  </div>
+</section>
+
+<script type="application/json" id="defect-log-data">{{ cfg | dump | safe }}</script>
+<script src="/js/defect-log.js" defer></script>

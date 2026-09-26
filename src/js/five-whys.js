@@ -127,4 +127,19 @@
   });
 
   restore();
+
+  // Other tools link here with ?problem=... to start a worksheet from their result.
+  const incoming = new URLSearchParams(location.search).get("problem")?.trim();
+  if (incoming) {
+    const current = form.elements.problem.value.trim();
+    if (current !== incoming && (!current || window.confirm(`Start a new worksheet with this problem?\n\n${incoming}`))) {
+      form.reset();
+      whyInputs().slice(5).forEach((input) => input.closest("li").remove());
+      addButton.hidden = false;
+      form.elements.problem.value = incoming;
+      save();
+      form.elements.why1.focus();
+    }
+    history.replaceState(null, "", location.pathname + location.hash);
+  }
 })();

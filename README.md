@@ -8,7 +8,7 @@ The site is built with [Eleventy](https://www.11ty.dev/) from the `src/` folder 
 - `src/_data/`: site settings (`site.json`), homepage highlights (`home.json`) and Impressum details (`legal.json`).
 - `src/_includes/`: the shared layout (head, header, footer), the article layout and the newsletter block.
 - `src/media/`: uploaded images and files.
-- `src/tools/` and `src/js/`: the free tools (KPI Diagnostic, 5 Whys). Their cards come from `src/_data/tools.json`; the diagnostic's statements and advice live in `src/_data/kpiDiagnostic.json`. They run entirely in the browser.
+- `src/tools/` and `src/js/`: the free tools (KPI Diagnostic, 5 Whys, Damage Control, Incomplete Control). Their cards come from `src/_data/tools.json`; the diagnostic's statements and advice live in `src/_data/kpiDiagnostic.json`. Damage Control and Incomplete Control share one page partial (`partials/defect-log.njk`) and script (`js/defect-log.js`); everything that differs (wording, fields, stage and cause advice, floor check, example week) lives in `src/_data/damageControl.json` and `src/_data/incompleteControl.json`. They run entirely in the browser; logs are kept only in the visitor's `localStorage`.
 - `.pages.yml`: the editing panel at [app.pagescms.org](https://app.pagescms.org). See `UDHEZUES.md` (in Albanian) for how to add content.
 
 ## Run locally
