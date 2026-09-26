@@ -34,7 +34,7 @@
 {%- endif %}
   <link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="/feed.xml">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <script>try{document.documentElement.dataset.theme=localStorage.getItem("sc-theme")||"dark"}catch(e){document.documentElement.dataset.theme="dark"}</script>
+  <script>document.documentElement.classList.add("js");try{document.documentElement.dataset.theme=localStorage.getItem("sc-theme")||"dark"}catch(e){document.documentElement.dataset.theme="dark"}</script>
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>

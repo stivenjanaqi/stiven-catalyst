@@ -187,6 +187,21 @@ window.ToolKit = (() => {
     return actions;
   };
 
+  // Log tables show the newest rows only: a table of thousands of rows makes
+  // every keystroke slow. Results and CSV always use every row.
+  const LOG_LIMIT = 100;
+  // With a large log, typing in a setting waits for a short pause before the
+  // results are rebuilt, so every keystroke stays instant.
+  const renderOnPause = (render, rowCount) => {
+    let timer;
+    return () => {
+      clearTimeout(timer);
+      if (rowCount() > 300) timer = setTimeout(render, 150);
+      else render();
+    };
+  };
+  const shownNote = (total) => (total > LOG_LIMIT ? ` · newest ${LOG_LIMIT} shown, CSV has all` : "");
+
   const flash = (node, message) => {
     node.textContent = message;
     clearTimeout(node.timer);
@@ -245,6 +260,6 @@ window.ToolKit = (() => {
   return {
     read, write, el, int, euro, pct, plural, capital, today,
     parseNumber, parseDate, splitLine, canon, sigma, sigmaText,
-    panel, stat, barList, focusCard, resultActions, flash, downloadCsv, floorCheck,
+    panel, stat, barList, focusCard, resultActions, flash, downloadCsv, floorCheck, LOG_LIMIT, shownNote, renderOnPause,
   };
 })();

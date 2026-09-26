@@ -5,7 +5,7 @@
   const {
     read, write, el, int, pct, plural, today,
     parseNumber, parseDate, splitLine, sigma, sigmaText,
-    panel, stat, resultActions, flash, downloadCsv,
+    panel, stat, resultActions, flash, downloadCsv, LOG_LIMIT, shownNote, renderOnPause,
   } = window.ToolKit;
 
   const data = JSON.parse(dataEl.textContent);
@@ -435,7 +435,8 @@
     }
     results.append(card);
 
-    const tablePanel = panel("Every day", "The same numbers as the chart.");
+    const many = result.points.length > LOG_LIMIT;
+    const tablePanel = panel(many ? `The latest ${LOG_LIMIT} days` : "Every day", many ? "The same numbers as the chart. Download the CSV for every day." : "The same numbers as the chart.");
     const tableWrap = el("div", "dl-table-wrap");
     const table = el("table", "dl-table");
     const thead = el("thead");
@@ -447,7 +448,7 @@
     });
     thead.append(headRow);
     const tbody = el("tbody");
-    result.points.forEach((point) => {
+    result.points.slice(-LOG_LIMIT).forEach((point) => {
       const tr = el("tr");
       if (point.signals.length) tr.classList.add("is-signal");
       [shortDate(point.date), int.format(point.n), int.format(point.d), rate(point.p), rate(point.lcl), rate(point.ucl)].forEach((text, i) => tr.append(el("td", i ? "num" : "nowrap", text)));
@@ -465,7 +466,7 @@
 
   const renderLog = () => {
     logBody.replaceChildren();
-    [...state.rows].reverse().forEach((row) => {
+    [...state.rows].reverse().slice(0, LOG_LIMIT).forEach((row) => {
       const tr = el("tr");
       tr.append(el("td", "nowrap", row.date), el("td", "num", int.format(row.n)), el("td", "num", int.format(row.d)), el("td", "num", rate(row.d / row.n)), el("td", "dl-note", row.note || ""));
       const cell = el("td");
@@ -479,7 +480,7 @@
     });
     logWrap.hidden = !state.rows.length;
     logEmpty.hidden = state.rows.length > 0;
-    logCount.textContent = state.rows.length ? plural(state.rows.length, "day") : "";
+    logCount.textContent = state.rows.length ? `${plural(state.rows.length, "day")}${shownNote(state.rows.length)}` : "";
   };
 
   const render = () => {
@@ -487,12 +488,13 @@
     renderResults();
   };
 
+  const renderSetting = renderOnPause(renderResults, () => state.rows.length);
   root.querySelectorAll("[data-setting]").forEach((input) => {
     input.value = state[input.name] ?? "";
     input.addEventListener("input", () => {
       state[input.name] = input.value;
       save();
-      renderResults();
+      renderSetting();
     });
   });
 

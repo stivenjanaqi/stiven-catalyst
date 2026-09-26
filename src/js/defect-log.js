@@ -9,7 +9,7 @@
   const {
     read, write, el, int, euro, pct, plural, capital, today,
     parseNumber, parseDate, splitLine, canon, sigma, sigmaText,
-    panel, stat, barList, focusCard, resultActions, flash, downloadCsv, floorCheck,
+    panel, stat, barList, focusCard, resultActions, flash, downloadCsv, floorCheck, LOG_LIMIT, shownNote, renderOnPause,
   } = window.ToolKit;
 
   const data = JSON.parse(dataEl.textContent);
@@ -126,7 +126,7 @@
   const renderLog = () => {
     const rows = state.rows;
     logBody.replaceChildren();
-    rows.map((row, index) => [row, index]).reverse().forEach(([row, index]) => {
+    rows.map((row, index) => [row, index]).reverse().slice(0, LOG_LIMIT).forEach(([row, index]) => {
       const tr = el("tr");
       tr.append(el("td", "nowrap", row.date || "-"));
       fields.forEach((f) => tr.append(el("td", null, row[f.name])));
@@ -145,7 +145,7 @@
     logWrap.hidden = !rows.length;
     logEmpty.hidden = rows.length > 0;
     const units = rows.reduce((sum, row) => sum + row.units, 0);
-    logCount.textContent = rows.length ? `${plural(rows.length, "entry", "entries")} · ${plural(units, t.one, t.many)}` : "";
+    logCount.textContent = rows.length ? `${plural(rows.length, "entry", "entries")} · ${plural(units, t.one, t.many)}${shownNote(rows.length)}` : "";
   };
 
   // Results.
@@ -323,12 +323,13 @@
   };
 
   // Period settings.
+  const renderSetting = renderOnPause(renderResults, () => state.rows.length);
   root.querySelectorAll("[data-setting]").forEach((input) => {
     input.value = state[input.name] ?? "";
     input.addEventListener("input", () => {
       state[input.name] = input.value;
       save();
-      renderResults();
+      renderSetting();
     });
   });
 
