@@ -58,9 +58,9 @@
   {
     "name": "Shift Handover",
     "type": "Checklist",
-    "time": "Soon",
-    "summary": "Build a handover that carries open issues, risks and ownership into the next shift, instead of leaving them in someone's head.",
-    "url": "",
-    "cta": ""
+    "time": "5 min",
+    "summary": "Numbers, open issues with an owner and a time, heads-up and safety in one handover. Open issues carry over to the next shift by themselves.",
+    "url": "/tools/shift-handover/",
+    "cta": "Start a handover"
   }
 ]

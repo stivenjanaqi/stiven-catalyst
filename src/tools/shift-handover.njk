@@ -1,0 +1,147 @@
+---
+layout: layouts/base.njk
+title: Shift Handover
+description: "A structured shift handover: numbers, open issues with owners, heads-up for the next shift, safety and people, and a handover check. Open issues carry over to the next shift. Free and private."
+activeNav: /tools.html
+permalink: /tools/shift-handover/
+---
+<section class="shell page-hero tool-hero">
+  <p class="eyebrow">Free tool · Handover</p>
+  <h1>Shift Handover</h1>
+  <p class="lede">Most problems are not lost on the shift, they are lost between shifts. Write the handover in five minutes, give every open issue an owner, and let the unresolved ones carry over by themselves.</p>
+</section>
+
+<section class="shell tool-layout dl-setup sh-setup">
+  <form class="tool-panel" data-handover novalidate>
+    <fieldset class="dl-box">
+      <legend class="kicker">1 · Shift</legend>
+      <div class="dl-grid">
+        <div class="field">
+          <label for="sh-template">Type of work</label>
+          <select id="sh-template" name="template">
+            {%- for key, t in shiftHandover.templates %}
+            <option value="{{ key }}">{{ t.name }}</option>
+            {%- endfor %}
+          </select>
+        </div>
+        <div class="field">
+          <label for="sh-date">Date</label>
+          <input id="sh-date" name="date" type="date">
+        </div>
+        <div class="field">
+          <label for="sh-shift">Shift</label>
+          <select id="sh-shift" name="shift">
+            {%- for shift in shiftHandover.shifts %}
+            <option>{{ shift }}</option>
+            {%- endfor %}
+          </select>
+        </div>
+        <div class="field">
+          <label for="sh-area">Area or team</label>
+          <input id="sh-area" name="area" placeholder="e.g. Outbound, docks 1–6" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="sh-from">Handed over by</label>
+          <input id="sh-from" name="from" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="sh-to">Taken over by</label>
+          <input id="sh-to" name="to" autocomplete="off">
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset class="dl-box">
+      <legend class="kicker">2 · Numbers at handover</legend>
+      <div class="sh-rows" data-metrics></div>
+      <button class="button-ghost" type="button" data-add-metric>+ Add a number</button>
+    </fieldset>
+
+    <fieldset class="dl-box">
+      <legend class="kicker">3 · Open issues</legend>
+      <p class="form-note sh-help">One line per issue, with one owner on the next shift and a time. Tick it when it is solved; everything else carries over when you close the shift.</p>
+      <div class="sh-issues" data-issues></div>
+      <button class="button-ghost" type="button" data-add-issue>+ Add an issue</button>
+    </fieldset>
+
+    <fieldset class="dl-box">
+      <legend class="kicker">4 · Heads-up and people</legend>
+      <div class="dl-grid sh-grid-2">
+        <div class="field">
+          <label for="sh-heads">Heads-up for the next shift</label>
+          <textarea id="sh-heads" name="headsUp" rows="4"></textarea>
+        </div>
+        <div class="field">
+          <label for="sh-safety">Safety and people</label>
+          <textarea id="sh-safety" name="safety" rows="4" placeholder="Incidents, near misses, absences, new starters"></textarea>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset class="dl-box">
+      <legend class="kicker">5 · Handover check</legend>
+      <ul class="dm-checklist" data-checklist></ul>
+    </fieldset>
+
+    <p class="dl-empty sh-empty" data-empty>New here? <button class="button-ghost" type="button" data-example>Load an example shift</button> to see a full handover.</p>
+  </form>
+
+  <aside class="tool-aside">
+    <p class="kicker">A good handover</p>
+    <ul class="tips">
+      <li><strong>Face to face, with the sheet.</strong> The written handover is the agenda for a two-minute talk, not a replacement for it.</li>
+      <li><strong>One owner per issue.</strong> "The early shift" is not an owner. A name is.</li>
+      <li><strong>Numbers, not feelings.</strong> "Backlog is fine" means nothing; "320 parcels, sorted" does.</li>
+      <li><strong>Watch what carries over.</strong> An issue carried three times is not a shift problem any more. Take it through <a class="inline-link" href="/tools/five-whys/">5 Whys</a>.</li>
+    </ul>
+    <p class="privacy-note">Handovers stay in this browser. Nothing is sent or uploaded. Copy the text to send it through your own channel.</p>
+  </aside>
+</section>
+
+<section class="shell sh-output" data-output tabindex="-1">
+  <div class="section-heading">
+    <div>
+      <p class="kicker">The handover</p>
+      <h2 data-output-title>Ready to hand over</h2>
+    </div>
+    <p>This is what the next shift reads. It updates as you type.</p>
+  </div>
+  <div class="sh-output-grid">
+    <article class="result-card sh-sheet" data-sheet></article>
+    <div class="sh-side">
+      <div class="dl-box sh-quality" data-quality></div>
+      <div class="dl-box">
+        <p class="kicker">Take over</p>
+        <p class="form-note sh-help" data-ack-text>The person taking over confirms they have read it and asked their questions.</p>
+        <div class="tool-actions">
+          <button class="button-secondary" type="button" data-ack>Confirm takeover</button>
+        </div>
+      </div>
+      <div class="tool-actions sh-actions">
+        <button class="button-primary" type="button" data-copy>Copy as text</button>
+        <button class="button-secondary" type="button" data-print>Print or save as PDF</button>
+        <button class="button-secondary" type="button" data-close>Close shift, start the next</button>
+        <button class="button-secondary" type="button" data-clear>Clear</button>
+      </div>
+      <p class="form-note" data-status aria-live="polite"></p>
+    </div>
+  </div>
+</section>
+
+<section class="shell sh-history" data-history-section hidden>
+  <div class="section-heading">
+    <div>
+      <p class="kicker">History</p>
+      <h2>Earlier handovers</h2>
+    </div>
+    <p>The last 30 closed shifts on this device. Open one to read or copy it.</p>
+  </div>
+  <div class="sh-history-list" data-history></div>
+  <div class="tool-actions">
+    <button class="button-secondary" type="button" data-clear-history>Delete history</button>
+  </div>
+</section>
+
+<script type="application/json" id="shift-handover-data">{{ shiftHandover | dump | safe }}</script>
+<script src="/js/tool-kit.js" defer></script>
+<script src="/js/shift-handover.js" defer></script>

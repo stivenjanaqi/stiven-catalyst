@@ -1,0 +1,159 @@
+{
+  "storageKey": "sc-shift-handover",
+  "shifts": [
+    "Early",
+    "Late",
+    "Night"
+  ],
+  "priorities": [
+    "High",
+    "Medium",
+    "Low"
+  ],
+  "templates": {
+    "warehouse": {
+      "name": "Warehouse",
+      "metrics": [
+        "Units handled",
+        "Backlog at handover",
+        "Damage %",
+        "Incomplete %",
+        "On-time departures %",
+        "Staff on shift"
+      ],
+      "checklist": [
+        "Every open issue has one owner on the next shift.",
+        "Equipment out of service is tagged and listed.",
+        "Backlog is counted, not estimated.",
+        "Safety incidents and near misses are written down.",
+        "Docks, aisles and fire exits are clear.",
+        "The next shift lead has read this handover and asked questions."
+      ],
+      "headsUp": "e.g. Volume peak expected at 11:00\nForklift 3 in repair until Thursday"
+    },
+    "hotel": {
+      "name": "Hotel front office",
+      "metrics": [
+        "Arrivals left",
+        "Departures left",
+        "Occupancy %",
+        "Rooms out of order",
+        "No-shows",
+        "Open guest complaints"
+      ],
+      "checklist": [
+        "Every guest issue has an owner and a promised time.",
+        "Cash and card terminals are balanced and counted.",
+        "Late arrivals and special requests are listed.",
+        "Rooms out of order are reported to maintenance.",
+        "Keys, safes and master keys are accounted for.",
+        "The next shift has read this handover and asked questions."
+      ],
+      "headsUp": "e.g. VIP arrives 23:30, room 412\nFire alarm test at 10:00"
+    },
+    "delivery": {
+      "name": "Delivery station",
+      "metrics": [
+        "Routes out",
+        "Routes back",
+        "Parcels undelivered",
+        "On-time %",
+        "Vehicles out of service",
+        "Drivers absent"
+      ],
+      "checklist": [
+        "Every returned parcel is scanned and has a reason.",
+        "Vehicle damage and defects are reported with photos.",
+        "Missing drivers and open routes are known to dispatch.",
+        "Keys, scanners and fuel cards are back and counted.",
+        "Customer escalations have an owner and a callback time.",
+        "The next shift has read this handover and asked questions."
+      ],
+      "headsUp": "e.g. Road closure on the B43 from 06:00\nTwo new drivers start on routes 14 and 15"
+    }
+  },
+  "example": {
+    "template": "warehouse",
+    "date": "2026-09-18",
+    "shift": "Late",
+    "area": "Outbound, docks 1–6",
+    "from": "Arben",
+    "to": "Lena",
+    "metrics": [
+      [
+        "Units handled",
+        "18,400",
+        "target 18,000"
+      ],
+      [
+        "Backlog at handover",
+        "320 parcels",
+        "wave 4, sorted"
+      ],
+      [
+        "Damage %",
+        "0.42%",
+        "target 0.30%"
+      ],
+      [
+        "Incomplete %",
+        "0.8%",
+        ""
+      ],
+      [
+        "On-time departures %",
+        "86%",
+        "11:15 and 11:30 left late"
+      ],
+      [
+        "Staff on shift",
+        "14 of 16",
+        "2 sick"
+      ]
+    ],
+    "issues": [
+      {
+        "text": "Forklift 3 leaks hydraulic oil; tagged out at dock 4",
+        "priority": "High",
+        "owner": "Lena",
+        "due": "Before 07:00",
+        "done": false,
+        "carried": 0
+      },
+      {
+        "text": "Cage wall on dock 3 collapsed at 18:40, 6 parcels repacked; stacking picture missing at that dock",
+        "priority": "Medium",
+        "owner": "Shift lead early",
+        "due": "Start of shift",
+        "done": false,
+        "carried": 1
+      },
+      {
+        "text": "Route R12 short 2 parcels, found in sort area",
+        "priority": "Medium",
+        "owner": "Dispatch",
+        "due": "Before first wave",
+        "done": false,
+        "carried": 0
+      },
+      {
+        "text": "Scanner 7 battery swapped",
+        "priority": "Low",
+        "owner": "Arben",
+        "due": "",
+        "done": true,
+        "carried": 0
+      }
+    ],
+    "headsUp": "Volume peak expected in the 11:00 wave, about +15%\nNew stacking standard pilot starts on docks 3 and 4",
+    "safety": "Near miss at dock 2: pallet truck and pedestrian, no injury. Reported in the safety log.\nTwo loaders sick; one agency loader for tomorrow confirmed.",
+    "checks": [
+      true,
+      true,
+      false,
+      true,
+      true,
+      false
+    ]
+  }
+}
