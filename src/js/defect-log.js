@@ -7,7 +7,7 @@
   if (!root || !dataEl || !window.ToolKit) return;
 
   const {
-    read, write, el, int, euro, pct, plural, capital, today,
+    read, write, isObject, str, loadState, el, int, euro, pct, plural, capital, today,
     parseNumber, parseDate, splitLine, canon, sigma, sigmaText,
     panel, stat, barList, focusCard, resultActions, flash, downloadCsv, floorCheck, LOG_LIMIT, shownNote, renderOnPause,
   } = window.ToolKit;
@@ -29,8 +29,18 @@
   const pasteArea = root.querySelector("#dl-paste");
   const results = document.querySelector("[data-results]");
 
-  const state = { period: "", volume: "", target: "", rows: [], ...read(KEY, {}) };
-  if (!Array.isArray(state.rows)) state.rows = [];
+  const state = loadState(KEY, { period: "", volume: "", target: "", rows: [] });
+  state.rows = state.rows.filter(isObject).map((row) => {
+    const units = Math.round(Number(row.units));
+    const cost = Number(row.cost);
+    return {
+      date: parseDate(row.date),
+      ...Object.fromEntries(fields.map((f) => [f.name, str(row[f.name]).trim() || NOT_RECORDED])),
+      units: units > 0 ? units : 1,
+      cost: row.cost != null && row.cost !== "" && cost >= 0 ? cost : null,
+      note: str(row.note),
+    };
+  });
   const save = () => write(KEY, state);
 
   const importRows = (text) => {

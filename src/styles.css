@@ -854,6 +854,14 @@ button, input, select { font: inherit; }
   outline: none;
   border-color: color-mix(in srgb, var(--blue) 60%, var(--line));
 }
+/* A clear ring for keyboard focus. */
+.field input:focus-visible,
+.field textarea:focus-visible,
+.field select:focus-visible,
+.sh-in:focus-visible {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--blue) 35%, transparent);
+}
 
 .contact-form button {
   justify-self: start;
@@ -1158,6 +1166,36 @@ button, input, select { font: inherit; }
 .tips li { margin-bottom: 12px; }
 .tips strong { color: var(--ink); }
 
+
+/* Shown by tool-kit.js when the browser cannot save. */
+.tk-save-warning {
+  position: fixed;
+  z-index: 60;
+  left: 50%;
+  bottom: 20px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  width: min(calc(100% - 28px), 640px);
+  padding: 14px 16px 14px 20px;
+  transform: translateX(-50%);
+  border: 1px solid color-mix(in srgb, var(--gold) 60%, var(--line));
+  border-radius: 16px;
+  background: var(--paper-2);
+  box-shadow: var(--shadow);
+  font-size: 14px;
+}
+.tk-save-warning p { margin: 0; }
+.tk-save-warning button {
+  flex: 0 0 auto;
+  padding: 8px 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--ink);
+  font-weight: 800;
+  cursor: pointer;
+}
 
 /* Defect logs (Damage Control, Incomplete Control) */
 .dl-box {

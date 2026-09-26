@@ -4,8 +4,51 @@ window.ToolKit = (() => {
   const read = (key, fallback) => {
     try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; }
   };
+  // When saving fails (storage full, blocked or private mode), say so once,
+  // so nobody relies on data that will be gone after a reload.
+  let warned = false;
+  const warnNotSaved = () => {
+    if (warned) return;
+    warned = true;
+    const box = document.createElement("div");
+    box.className = "tk-save-warning";
+    box.setAttribute("role", "alert");
+    const text = document.createElement("p");
+    text.textContent = "This browser could not save your latest changes (storage is full, blocked or private). They stay on this page until you close it: download the CSV or copy the summary to keep them.";
+    const close = document.createElement("button");
+    close.type = "button";
+    close.textContent = "OK";
+    close.addEventListener("click", () => box.remove());
+    box.append(text, close);
+    document.body.append(box);
+  };
   const write = (key, value) => {
-    try { localStorage.setItem(key, JSON.stringify(value)); } catch { /* storage unavailable */ }
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+      return true;
+    } catch {
+      warnNotSaved();
+      return false;
+    }
+  };
+
+  // Saved data can be damaged (an old format, an extension, a cut-off write).
+  // Load only what has the expected shape, so a tool never breaks on load.
+  const isObject = (value) => value !== null && typeof value === "object" && !Array.isArray(value);
+  const str = (value) => (typeof value === "string" ? value : "");
+  const loadState = (key, defaults) => {
+    const saved = read(key, {});
+    const state = { ...defaults };
+    if (!isObject(saved)) return state;
+    Object.keys(defaults).forEach((name) => {
+      const value = saved[name];
+      const expected = defaults[name];
+      const fits = Array.isArray(expected) ? Array.isArray(value)
+        : isObject(expected) ? isObject(value)
+        : typeof value === typeof expected;
+      if (fits) state[name] = value;
+    });
+    return state;
   };
 
   const el = (tag, className, text) => {
@@ -258,7 +301,7 @@ window.ToolKit = (() => {
   };
 
   return {
-    read, write, el, int, euro, pct, plural, capital, today,
+    read, write, isObject, str, loadState, el, int, euro, pct, plural, capital, today,
     parseNumber, parseDate, splitLine, canon, sigma, sigmaText,
     panel, stat, barList, focusCard, resultActions, flash, downloadCsv, floorCheck, LOG_LIMIT, shownNote, renderOnPause,
   };

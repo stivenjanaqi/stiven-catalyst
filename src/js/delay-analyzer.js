@@ -4,7 +4,7 @@
   if (!root || !dataEl || !window.ToolKit) return;
 
   const {
-    read, write, el, int, pct, plural, today,
+    read, write, isObject, str, loadState, el, int, pct, plural, today,
     parseNumber, parseDate, splitLine, canon, sigmaText,
     panel, stat, barList, focusCard, resultActions, flash, downloadCsv, floorCheck, LOG_LIMIT, shownNote, renderOnPause,
   } = window.ToolKit;
@@ -25,8 +25,7 @@
   const pasteArea = root.querySelector("#da-paste");
   const results = document.querySelector("[data-results]");
 
-  const state = { period: "", routes: "", departureGrace: "10", arrivalGrace: "15", target: "", rows: [], ...read(KEY, {}) };
-  if (!Array.isArray(state.rows)) state.rows = [];
+  const state = loadState(KEY, { period: "", routes: "", departureGrace: "10", arrivalGrace: "15", target: "", rows: [] });
   const save = () => write(KEY, state);
 
   // Times: 07:45, 7.45, 0745, 07:45:00, or an Excel day fraction (0.3229).
@@ -49,6 +48,18 @@
     if (value > 720) value -= 1440;
     return value;
   };
+  // Keep saved routes that still have both arrival times; see loadState.
+  state.rows = state.rows.filter(isObject).map((row) => ({
+    date: parseDate(row.date),
+    shift: str(row.shift).trim() || NOT_RECORDED,
+    route: str(row.route),
+    planDep: parseTime(str(row.planDep)),
+    actDep: parseTime(str(row.actDep)),
+    planArr: parseTime(str(row.planArr)),
+    actArr: parseTime(str(row.actArr)),
+    reason: str(row.reason),
+    note: str(row.note),
+  })).filter((row) => row.planArr && row.actArr);
   const signed = (value) => (value === null ? "" : value > 0 ? `+${value}` : value < 0 ? `−${-value}` : "0");
   const minutes = (value) => `${int.format(Math.round(value))} min`;
 

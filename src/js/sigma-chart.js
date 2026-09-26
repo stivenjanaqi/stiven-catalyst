@@ -3,7 +3,7 @@
   if (!dataEl || !window.ToolKit) return;
 
   const {
-    read, write, el, int, pct, plural, today,
+    read, write, isObject, str, loadState, el, int, pct, plural, today,
     parseNumber, parseDate, splitLine, sigma, sigmaText,
     panel, stat, resultActions, flash, downloadCsv, LOG_LIMIT, shownNote, renderOnPause,
   } = window.ToolKit;
@@ -25,7 +25,8 @@
   const perfectOut = document.querySelector("[data-perfect-out]");
   const sigmaTable = document.querySelector("[data-sigma-table]");
   const CALC_KEY = `${data.storageKey}-calc`;
-  const calcState = read(CALC_KEY, {});
+  const savedCalc = read(CALC_KEY, {});
+  const calcState = isObject(savedCalc) ? savedCalc : {};
 
   const hint = (text) => el("p", "form-note sc-hint", text);
 
@@ -96,7 +97,7 @@
   [calcSigma, calcPerfect].forEach((form) => {
     form.addEventListener("submit", (event) => event.preventDefault());
     form.querySelectorAll("[data-calc]").forEach((input) => {
-      if (calcState[input.name] != null) input.value = calcState[input.name];
+      if (typeof calcState[input.name] === "string") input.value = calcState[input.name];
       input.addEventListener("input", () => {
         calcState[input.name] = input.value;
         write(CALC_KEY, calcState);
@@ -121,8 +122,10 @@
   const results = document.querySelector("[data-results]");
   const KEY = data.storageKey;
 
-  const state = { metric: "", unit: "", baseline: "", rows: [], ...read(KEY, {}) };
-  if (!Array.isArray(state.rows)) state.rows = [];
+  const state = loadState(KEY, { metric: "", unit: "", baseline: "", rows: [] });
+  state.rows = state.rows.filter(isObject)
+    .map((row) => ({ date: parseDate(row.date), n: Math.round(Number(row.n)), d: Math.round(Number(row.d)), note: str(row.note) }))
+    .filter((row) => row.date && row.n > 0 && row.d >= 0 && row.d <= row.n);
   const save = () => write(KEY, state);
   const metric = () => state.metric.trim() || "Defects";
   const unit = () => state.unit.trim() || "Handled";
