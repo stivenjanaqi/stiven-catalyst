@@ -6,7 +6,7 @@
   const {
     read, write, el, int, pct, plural, today,
     parseNumber, parseDate, splitLine, canon, sigmaText,
-    panel, stat, barList, focusCard, resultActions, flash, downloadCsv, floorCheck,
+    panel, stat, barList, focusCard, resultActions, flash, downloadCsv, floorCheck, LOG_LIMIT, shownNote, renderOnPause,
   } = window.ToolKit;
 
   const data = JSON.parse(dataEl.textContent);
@@ -193,7 +193,7 @@
     const arrGrace = Math.max(0, parseNumber(state.arrivalGrace) || 0);
     const rows = state.rows;
     logBody.replaceChildren();
-    rows.map((row, index) => [row, index]).reverse().forEach(([row, index]) => {
+    rows.map((row, index) => [row, index]).reverse().slice(0, LOG_LIMIT).forEach(([row, index]) => {
       const dep = diff(row.planDep, row.actDep);
       const arr = diff(row.planArr, row.actArr);
       const tr = el("tr");
@@ -218,7 +218,7 @@
     logWrap.hidden = !rows.length;
     logEmpty.hidden = rows.length > 0;
     const late = rows.filter((row) => diff(row.planArr, row.actArr) > arrGrace).length;
-    logCount.textContent = rows.length ? `${plural(rows.length, "route")} · ${int.format(late)} late` : "";
+    logCount.textContent = rows.length ? `${plural(rows.length, "route")} · ${int.format(late)} late${shownNote(rows.length)}` : "";
   };
 
   // Results.
@@ -398,12 +398,13 @@
   };
 
   // Period settings.
+  const renderSetting = renderOnPause(render, () => state.rows.length);
   root.querySelectorAll("[data-setting]").forEach((input) => {
     input.value = state[input.name] ?? "";
     input.addEventListener("input", () => {
       state[input.name] = input.value;
       save();
-      render();
+      renderSetting();
     });
   });
 

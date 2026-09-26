@@ -1754,6 +1754,7 @@ select.sh-in { cursor: pointer; }
 }
 
 /* Search and filters */
+html:not(.js) .filter-bar { display: none; }
 .filter-bar {
   display: grid;
   gap: 16px;

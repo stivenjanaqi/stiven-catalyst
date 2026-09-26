@@ -1,5 +1,5 @@
-{#- Search and topic chips; hidden until filter.js runs, so the page works without JavaScript. -#}
-<div class="filter-bar" data-filter-controls hidden>
+{#- Search and topic chips; shown only when JavaScript runs (the "js" class is set in the head, so nothing moves on load). -#}
+<div class="filter-bar" data-filter-controls>
   <div class="filter-search">
     <label class="visually-hidden" for="filter-search">{{ searchLabel }}</label>
     <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
